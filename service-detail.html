@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarqNova | Service Details</title>
+    <!-- Favicon -->
+     
+     <link rel="icon" type="image/png" href="./static/logo.jpeg">
+    <link rel="shortcut icon" href="./static/logo.jpeg">
+    <!-- <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/6997/6997662.png">
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/6997/6997662.png"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Service Detail Page Enhanced Styles */
+        .service-hero {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+            padding: 8rem 0 4rem;
+            text-align: center;
+        }
+        .service-hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+        
+        /* Service Detail Section - Text Left, Image Right with Animation */
+        .service-detail-section {
+            margin: 4rem 0;
+        }
+        .service-detail-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .service-detail-text {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+        .service-detail-text.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .service-detail-image {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+        .service-detail-image.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .service-detail-image img {
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.5s;
+        }
+        .service-detail-image img:hover {
+            transform: scale(1.02);
+        }
+        .service-detail-text h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .service-detail-text p {
+            color: var(--light-gray);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        .service-detail-text ul {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+        .service-detail-text li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .service-detail-text li i {
+            color: var(--success);
+        }
+        
+        /* Features Grid */
+        .service-features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .feature-card {
+            background: var(--glass);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateX(5px);
+            border-color: var(--primary);
+        }
+        .feature-card img {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+        
+        /* Project Showcase */
+        .project-showcase {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        .project-item {
+            background: var(--glass);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .project-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+        .project-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .project-info {
+            padding: 1.5rem;
+        }
+        
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+            justify-content: center;
+        }
+        .tech-badge {
+            background: rgba(99,102,241,0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--primary-light);
+        }
+        
+        /* Why Choose Section */
+        .why-choose-section {
+            background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(6,182,212,0.1));
+            border-radius: 30px;
+            padding: 3rem;
+            margin: 3rem 0;
+        }
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .why-card {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .why-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        .why-card i {
+            font-size: 2rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        /* Testimonial */
+        .testimonial-small {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--glass);
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+        .testimonial-small img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        /* FAQ */
+        .faq-item {
+            background: var(--glass);
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: var(--light-gray);
+        }
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.2rem;
+            max-height: 200px;
+        }
+        
+        @media (max-width: 768px) {
+            .service-detail-wrapper { grid-template-columns: 1fr; }
+            .service-features-grid { grid-template-columns: 1fr; }
+            .project-showcase { grid-template-columns: 1fr; }
+            .why-grid { grid-template-columns: 1fr; }
+            .service-hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cursor"></div>
+<div class="cursor-follower"></div>
+<canvas id="particles-canvas"></canvas>
+
+<!-- AI Chat Bot Widget -->
+<div id="aiChatbot" style="position: fixed; bottom: 100px; right: 20px; z-index: 1000;">
+    <div id="chatToggle" style="width: 60px; height: 60px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: var(--shadow-glow);">
+        <i class="fas fa-comment-dots" style="font-size: 1.8rem; color: white;"></i>
+    </div>
+    <div id="chatWindow" style="display: none; position: absolute; bottom: 70px; right: 0; width: 320px; background: var(--glass); backdrop-filter: blur(20px); border-radius: 20px; border: 1px solid var(--glass-border); overflow: hidden; box-shadow: var(--shadow-lg);">
+        <div style="background: var(--gradient-primary); padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <span><i class="fas fa-robot"></i> BarqNova AI Assistant</span>
+            <span id="closeChat" style="cursor: pointer;"><i class="fas fa-times"></i></span>
+        </div>
+        <div id="chatMessages" style="height: 300px; overflow-y: auto; padding: 1rem;">
+            <div style="margin-bottom: 1rem;"><span style="background: var(--primary); padding: 0.5rem 1rem; border-radius: 15px; display: inline-block;">Hello! How can I help you today?</span></div>
+        </div>
+        <div style="padding: 1rem; border-top: 1px solid var(--glass-border); display: flex; gap: 0.5rem;">
+            <input type="text" id="chatInput" placeholder="Ask me anything..." style="flex: 1; padding: 0.8rem; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 25px; color: white;">
+            <button id="sendChat" style="background: var(--primary); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer;"><i class="fas fa-paper-plane" style="color: white;"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/15551234567" target="_blank" id="whatsappBtn" style="position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 4px 15px rgba(37,211,102,0.4); transition: all 0.3s;">
+    <i class="fab fa-whatsapp" style="font-size: 2rem; color: white;"></i>
+</a>
+
+<header class="header" id="header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="./static/logo.jpeg" alt="BarqNova Logo" class="logo-img" style="width: 45px; height: 45px; object-fit: contain; border-radius: 10px;">
+            <span class="logo-text">Barq<span>Nova</span></span>
+        </a>
+        <nav class="nav" id="nav">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="portfolio.html" class="nav-link">Meet our Team</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="contact.html" class="btn btn-primary">Get Started</a>
+        <button class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></button>
+    </div>
+</header>
+
+<main>
+    <section class="service-hero">
+        <div class="container">
+            <h1><span class="gradient-text" id="service-title">Web Development</span> Services</h1>
+            <p id="service-desc">Custom websites, e-commerce stores, and web applications built for performance and conversions.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Service Detail Section - Text Left, Image Right with Animation -->
+        <div class="service-detail-section">
+            <div class="service-detail-wrapper">
+                <div class="service-detail-text" id="serviceDetailText">
+                    <h2>What is <span class="gradient-text" id="detail-title">Web Development</span>?</h2>
+                    <p id="detail-description">Web development is the process of building, creating, and maintaining websites. It encompasses everything from simple static pages to complex web applications, e-commerce platforms, and social network services. Our web development services focus on creating fast, secure, and user-friendly websites that drive business growth.</p>
+                    <ul id="detail-features">
+                        <li><i class="fas fa-check-circle"></i> Custom website design and development</li>
+                        <li><i class="fas fa-check-circle"></i> Responsive mobile-friendly layouts</li>
+                        <li><i class="fas fa-check-circle"></i> SEO-optimized code structure</li>
+                        <li><i class="fas fa-check-circle"></i> Fast loading and high performance</li>
+                    </ul>
+                </div>
+                <div class="service-detail-image" id="serviceDetailImage">
+                    <img id="detail-img" src="./static/web-development.jpg" alt="Service Image">
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <h2 class="section-title">Key <span class="gradient-text">Features</span></h2>
+        <div class="service-features-grid" id="service-features">
+            <div class="feature-card"><img src="https://cdn-icons-png.flaticon.com/512/1055/1055666.png" alt="Responsive"><div><h4>Responsive Design</h4><p style="color: var(--light-gray);">Works on all devices</p></div></div>
+            <div class="feature-card"><img src="https://cdn-icons-png.flaticon.com/512/1695/1695799.png" alt="SEO"><div><h4>SEO Optimized</h4><p style="color: var(--light-gray);">Rank higher on Google</p></div></div>
+            <div class="feature-card"><img src="https://cdn-icons-png.flaticon.com/512/1995/1995576.png" alt="Fast"><div><h4>Fast Loading</h4><p style="color: var(--light-gray);">Optimized performance</p></div></div>
+            <div class="feature-card"><img src="https://cdn-icons-png.flaticon.com/512/3820/3820273.png" alt="Secure"><div><h4>Secure</h4><p style="color: var(--light-gray);">SSL & security features</p></div></div>
+        </div>
+
+        <!-- Why Choose This Service Section -->
+        <div class="why-choose-section">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Why Choose <span class="gradient-text" id="why-title">Web Development</span>?</h2>
+            <div class="why-grid" id="why-grid">
+                <div class="why-card"><i class="fas fa-rocket"></i><h3>Fast Delivery</h3><p style="color: var(--light-gray);">Get your project delivered on time with regular updates</p></div>
+                <div class="why-card"><i class="fas fa-shield-alt"></i><h3>Quality Assurance</h3><p style="color: var(--light-gray);">Rigorous testing for bug-free performance</p></div>
+                <div class="why-card"><i class="fas fa-headset"></i><h3>24/7 Support</h3><p style="color: var(--light-gray);">Round-the-clock assistance for your business</p></div>
+            </div>
+        </div>
+
+        <!-- Technology Stack -->
+        <div style="margin: 3rem 0;">
+            <h3 style="text-align: center; margin-bottom: 1.5rem;">Technologies We Use</h3>
+            <div class="tech-stack" id="tech-stack" style="justify-content: center;">
+                <span class="tech-badge">React.js</span>
+                <span class="tech-badge">Node.js</span>
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">PHP</span>
+                <span class="tech-badge">Laravel</span>
+                <span class="tech-badge">WordPress</span>
+                <span class="tech-badge">Shopify</span>
+                <span class="tech-badge">WooCommerce</span>
+                <span class="tech-badge">MongoDB</span>
+                <span class="tech-badge">MySQL</span>
+            </div>
+        </div>
+
+        <!-- Recent Projects Showcase -->
+        <h2 class="section-title">Recent <span class="gradient-text">Projects</span></h2>
+        <div class="project-showcase" id="project-showcase">
+            <div class="project-item"><img src="https://images.pexels.com/photos/2885347/pexels-photo-2885347.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Project 1"><div class="project-info"><h3>LuxeStyle Fashion</h3><p>E-commerce website with payment integration</p><span style="color: #10b981;">+312% Sales</span></div></div>
+            <div class="project-item"><img src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Project 2"><div class="project-info"><h3>Prime Properties</h3><p>Real estate platform with MLS integration</p><span style="color: #10b981;">500+ Leads/month</span></div></div>
+            <div class="project-item"><img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Project 3"><div class="project-info"><h3>Finwise AI</h3><p>SaaS platform with dashboard</p><span style="color: #10b981;">10k+ Users</span></div></div>
+        </div>
+
+        Testimonial
+        <div class="testimonial-small" id="testimonial">
+            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client">
+            <div><p style="font-style: italic;">"BarqNova built an amazing website for our business. The team was professional and delivered ahead of schedule!"</p><h4>- Sarah Johnson</h4></div>
+        </div>
+
+        <!-- FAQ Section -->
+        <h2 class="section-title">Frequently Asked <span class="gradient-text">Questions</span></h2>
+        <div style="margin: 2rem 0;">
+            <div class="faq-item"><div class="faq-question">How long does development take? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Typically 2-6 weeks depending on project complexity. We'll provide a timeline during consultation.</div></div>
+            <div class="faq-item"><div class="faq-question">Do you provide maintenance? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Yes, we offer ongoing maintenance and support packages to keep your website secure and updated.</div></div>
+            <div class="faq-item"><div class="faq-question">Can you redesign my existing website? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Absolutely! We specialize in website redesigns and performance optimization.</div></div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="container">
+        <div class="cta-section">
+            <h2>Ready to <span class="gradient-text">Get Started?</span></h2>
+            <p>Book a free consultation with our experts today.</p>
+            <a href="contact.html" class="btn btn-primary btn-large">Book Free Consultation →</a>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <a href="index.html" class="footer-logo">
+                    <img src="./static/logo.jpeg" alt="Logo" class="footer-logo-img" style="width: 35px; height: 35px; object-fit: contain; border-radius: 8px;">
+                    <span>Barq<span class="gradient-text">Nova</span></span>
+                </a>
+                <p class="footer-desc">We help businesses grow with cutting-edge digital solutions.</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/share/1B7BiNUmZX/"><i class="fab fa-facebook-f"></i></a>
+                    <!-- <a href="#"><i class="fab fa-twitter"></i></a> -->
+                    <a href="https://www.instagram.com/barqnova1122?igsh=YnR5NGVvNzl1dnQy"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/aqsa-iqbal-813996344?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-links"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+            <div class="footer-links"><h4>Services</h4><ul><li><a href="service-detail.html?service=web">Web Development</a></li><li><a href="service-detail.html?service=marketing">Digital Marketing</a></li><li><a href="service-detail.html?service=seo">SEO</a></li></ul></div>
+            <div class="footer-links"><h4>Contact</h4><ul><li><i class="fas fa-envelope"></i> growthifydigitize@gmail.com</li><li><i class="fas fa-phone"></i> +92 3275124828</li></ul></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2025 BarqNova. All rights reserved.</p></div>
+    </div>
+</footer>
+
+<button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+<script src="script.js"></script>
+<script>
+    // Complete Service Data for all 10 services
+    const serviceData = {
+        web: {
+            title: 'Web Development',
+            desc: 'Custom websites, e-commerce stores, and web applications built for performance and conversions.',
+            detailTitle: 'Web Development',
+            detailDesc: 'Web development is the process of building, creating, and maintaining websites. It encompasses everything from simple static pages to complex web applications, e-commerce platforms, and social network services. Our web development services focus on creating fast, secure, and user-friendly websites that drive business growth.',
+            detailFeatures: [
+                'Custom website design and development from scratch',
+                'Responsive mobile-friendly layouts that work on all devices',
+                'SEO-optimized code structure for better search rankings',
+                'Fast loading speed and high performance optimization',
+                'Secure coding practices with SSL certification',
+                'Easy-to-use content management system (CMS) integration'
+            ],
+            sideImg: './static/Website Development.jpg',
+            features: [
+                { img: 'https://cdn-icons-png.flaticon.com/512/1055/1055666.png', title: 'Responsive Design', desc: 'Works perfectly on all devices' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/1695/1695799.png', title: 'SEO Optimized', desc: 'Built with SEO best practices' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/1995/1995576.png', title: 'Fast Loading', desc: 'Optimized for speed' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/3820/3820273.png', title: 'Secure', desc: 'Enterprise-grade security' }
+            ],
+            techs: ['React.js', 'Node.js', 'Python', 'PHP', 'Laravel', 'WordPress', 'Shopify', 'WooCommerce', 'MongoDB', 'MySQL'],
+            whyCards: [
+                { icon: 'fa-rocket', title: 'Fast Delivery', desc: 'Get your project delivered on time with regular updates' },
+                { icon: 'fa-shield-alt', title: 'Quality Assurance', desc: 'Rigorous testing for bug-free performance' },
+                { icon: 'fa-headset', title: '24/7 Support', desc: 'Round-the-clock assistance for your business' }
+            ],
+            projects: [
+                { img: './static/palor.jpeg', title: 'LuxeStyle Fashion', desc: 'E-commerce website with payment integration', result: '+312% Sales' },
+                { img: './static/parwaz.jpeg', title: 'Prime Properties', desc: 'Real estate platform with MLS integration', result: '500+ Leads/month' },
+                { img: './static/cart.jpeg', title: 'Finwise AI', desc: 'SaaS platform with dashboard', result: '10k+ Users' }
+            ],
+            testimonial: { img: 'https://randomuser.me/api/portraits/women/68.jpg', name: 'Sarah Johnson', text: 'BarqNova built an amazing website for our business. The team was professional and delivered ahead of schedule!' }
+        },
+        marketing: {
+            title: 'Digital Marketing', desc: 'Data-driven marketing campaigns that maximize your ROI across all platforms.',
+            detailTitle: 'Digital Marketing',
+            detailDesc: 'Digital marketing encompasses all marketing efforts that use electronic devices or the internet. Businesses leverage digital channels such as search engines, social media, email, and other websites to connect with current and prospective customers. Our digital marketing services help you reach your target audience, increase brand awareness, and drive sales.',
+            detailFeatures: [
+                'Search Engine Optimization (SEO) to rank higher on Google',
+                'Pay-Per-Click (PPC) advertising on Google and social media',
+                'Social media marketing across Facebook, Instagram, LinkedIn, TikTok',
+                'Email marketing campaigns that nurture and convert leads',
+                'Content marketing strategy and creation',
+                'Detailed analytics and performance reporting'
+            ],
+            sideImg: './static/Digital Marketing card.jpg',
+            features: [
+                { img: 'https://cdn-icons-png.flaticon.com/512/1695/1695799.png', title: 'PPC Campaigns', desc: 'Targeted ad campaigns' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/4138/4138124.png', title: 'Social Media Ads', desc: 'Facebook, Instagram, TikTok' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/942/942748.png', title: 'Email Marketing', desc: 'Automated campaigns' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/3063/3063238.png', title: 'Analytics', desc: 'Data-driven decisions' }
+            ],
+            techs: ['Google Ads', 'Facebook Ads', 'TikTok Ads', 'LinkedIn Ads', 'Mailchimp', 'HubSpot', 'Google Analytics', 'SEMrush'],
+            whyCards: [
+                { icon: 'fa-chart-line', title: 'High ROI', desc: 'Proven campaigns with 300%+ average ROI' },
+                { icon: 'fa-bullseye', title: 'Targeted Reach', desc: 'Reach your ideal customers precisely' },
+                { icon: 'fa-chart-pie', title: 'Real-time Analytics', desc: 'Live dashboard with campaign insights' }
+            ],
+            projects: [
+                { img: './static/palor.jpeg', title: 'Finwise AI', desc: 'Multi-channel marketing campaign', result: '+400% Traffic' },
+                { img: './static/parwaz.jpeg', title: 'FitTrack App', desc: 'App launch campaign', result: '50k+ Downloads' },
+                { img: './static/cart.jpeg', title: 'LuxeStyle', desc: 'TikTok ad campaign', result: '+312% ROI' }
+            ],
+            testimonial: { img: 'https://randomuser.me/api/portraits/women/45.jpg', name: 'Priya Sharma', text: 'Their digital marketing campaigns are unmatched. We saw a 312% ROI in the first quarter!' }
+        },
+        seo: {
+            title: 'SEO Optimization', desc: 'Rank #1 on Google with our proven white-hat SEO strategies.',
+            detailTitle: 'SEO Optimization',
+            detailDesc: 'Search Engine Optimization (SEO) is the practice of increasing the quantity and quality of traffic to your website through organic search engine results. Our SEO services help your business rank higher on Google, attract more qualified leads, and grow your online presence sustainably.',
+            detailFeatures: [
+                'Comprehensive keyword research and strategy development',
+                'On-page SEO optimization including meta tags, headings, and content',
+                'Technical SEO audits and fixes for site structure and performance',
+                'Quality link building from authoritative websites',
+                'Local SEO optimization for location-based searches',
+                'Monthly performance reports and actionable insights'
+            ],
+            sideImg: './static/SEO Optimization card.jpg',
+            features: [
+                { img: 'https://cdn-icons-png.flaticon.com/512/1995/1995576.png', title: 'Keyword Research', desc: 'Find winning keywords' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/1695/1695799.png', title: 'On-Page SEO', desc: 'Optimize your content' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/3820/3820273.png', title: 'Link Building', desc: 'Quality backlinks' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/3063/3063238.png', title: 'Technical SEO', desc: 'Site architecture optimization' }
+            ],
+            techs: ['Google Search Console', 'Ahrefs', 'SEMrush', 'Moz', 'Screaming Frog', 'Google Analytics', 'Yoast SEO'],
+            whyCards: [
+                { icon: 'fa-chart-line', title: 'Rank #1', desc: 'Dominate search results' },
+                { icon: 'fa-clock', title: 'Sustainable Growth', desc: 'Long-term organic traffic' },
+                { icon: 'fa-chart-pie', title: 'Monthly Reports', desc: 'Detailed performance tracking' }
+            ],
+            projects: [
+                { img: './static/palor.jpeg', title: 'Burger House', desc: 'Local SEO optimization', result: '+200% Foot Traffic' },
+                { img: './static/parwaz.jpeg', title: 'TechStart Blog', desc: 'Content SEO strategy', result: '15+ #1 Rankings' },
+                { img: './static/cart.jpeg', title: 'LuxeStyle', desc: 'E-commerce SEO', result: '+150% Organic Traffic' }
+            ],
+            testimonial: { img: 'https://randomuser.me/api/portraits/men/32.jpg', name: 'Michael Chen', text: 'The SEO strategy took us from page 3 to #1 position for 15+ keywords!' }
+        },
+        social: {
+            title: 'Social Media Management', desc: 'Build engaged communities across Instagram, Facebook, LinkedIn, and TikTok.',
+            detailTitle: 'Social Media Management',
+            detailDesc: 'Social media management involves creating, scheduling, analyzing, and engaging with content posted on social media platforms. Our social media management services help you build a strong brand presence, engage with your audience, and drive meaningful results across all major platforms.',
+            detailFeatures: [
+                'Custom content strategy tailored to your brand and audience',
+                'High-quality content creation including graphics, videos, and captions',
+                'Daily community engagement and response management',
+                'Paid social media advertising campaigns',
+                'Influencer partnership and collaboration management',
+                'Detailed analytics and monthly performance reports'
+            ],
+            sideImg: './static/Social Media Marketing card.jpg',
+            features: [
+                { img: 'https://cdn-icons-png.flaticon.com/512/4138/4138124.png', title: 'Content Strategy', desc: 'Engaging content calendar' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/3820/3820273.png', title: 'Community Management', desc: '24/7 audience engagement' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/1695/1695799.png', title: 'Paid Social Ads', desc: 'Targeted social campaigns' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/3063/3063238.png', title: 'Analytics', desc: 'Performance tracking' }
+            ],
+            techs: ['Meta Business Suite', 'Hootsuite', 'Buffer', 'Later', 'Canva', 'Sprout Social'],
+            whyCards: [
+                { icon: 'fa-hashtag', title: 'Brand Growth', desc: 'Increase followers & engagement' },
+                { icon: 'fa-chart-line', title: 'ROI Focused', desc: 'Drive conversions from social' },
+                { icon: 'fa-clock', title: 'Time Saving', desc: 'We handle everything for you' }
+            ],
+            projects: [
+                { img: './static/palor.jpeg', title: 'Fashion Brand', desc: 'Instagram growth campaign', result: '+50k Followers' },
+                { img: './static/parwaz.jpeg', title: 'Tech Startup', desc: 'LinkedIn engagement', result: '+300% Reach' }
+            ],
+            testimonial: { img: 'https://randomuser.me/api/portraits/women/68.jpg', name: 'Emma Watson', text: 'Our social media engagement has tripled since working with BarqNova!' }
+        },
+        content: {
+            title: 'Content Creation', desc: 'Engaging content that tells your brand story and converts readers.',
+            detailTitle: 'Content Creation',
+            detailDesc: 'Content creation is the process of generating topic ideas that appeal to your buyer persona, creating written or visual content around those ideas, and making that information accessible to your audience. Our content creation services help you build brand authority, attract qualified leads, and drive conversions.',
+            detailFeatures: [
+                'SEO-optimized blog posts and articles that rank on Google',
+                'Persuasive website copy that converts visitors into customers',
+                'Engaging social media content for all platforms',
+                'Email newsletters that nurture and retain customers',
+                'Case studies and whitepapers that build trust',
+                'Video scripts and podcast show notes'
+            ],
+            sideImg: './static/Content Creation card.jpg',
+            features: [
+                { img: 'https://cdn-icons-png.flaticon.com/512/2613/2613485.png', title: 'Blog Writing', desc: 'SEO-optimized articles' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/3820/3820273.png', title: 'Copywriting', desc: 'Persuasive website copy' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/942/942748.png', title: 'Newsletters', desc: 'Email content' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/1695/1695799.png', title: 'Case Studies', desc: 'Success stories' }
+            ],
+            techs: ['WordPress', 'Grammarly', 'SEMrush', 'SurferSEO', 'Google Docs'],
+            whyCards: [
+                { icon: 'fa-pen-fancy', title: 'Expert Writers', desc: 'Professional content creators' },
+                { icon: 'fa-search', title: 'SEO Optimized', desc: 'Content that ranks' },
+                { icon: 'fa-chart-line', title: 'Engaging', desc: 'Content that converts' }
+            ],
+            projects: [
+                { img: './static/parwaz.jpeg', title: 'Tech Blog', desc: 'Content strategy', result: '+200% Traffic' }
+            ],
+            testimonial: { img: 'https://randomuser.me/api/portraits/men/32.jpg', name: 'David Lee', text: 'The content quality is exceptional. Our blog traffic has doubled!' }
+        },
+        email: {
+            title: 'Email Marketing', desc: 'Automated campaigns that nurture leads and drive repeat sales.',
+            detailTitle: 'Email Marketing',
+            detailDesc: 'Email marketing is a powerful digital marketing strategy that involves sending targeted emails to prospects and customers. Effective email marketing converts prospects into customers and turns one-time buyers into loyal, repeat customers. Our email marketing services help you build relationships, nurture leads, and drive sales.',
+            detailFeatures: [
+                'Email campaign strategy and planning',
+                'Beautiful email template design that converts',
+                'Automated drip campaigns for lead nurturing',
+                'Segmentation and personalization for targeted messaging',
+                'A/B testing to optimize performance',
+                'Detailed analytics and ROI tracking'
+            ],
+            sideImg: './static/Email Marketing Expert card.jpg',
+            features: [
+                { img: 'https://cdn-icons-png.flaticon.com/512/942/942748.png', title: 'Campaign Strategy', desc: 'Strategic email planning' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/1995/1995576.png', title: 'Automation', desc: 'Drip campaigns' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/3063/3063238.png', title: 'A/B Testing', desc: 'Optimize performance' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/1695/1695799.png', title: 'Analytics', desc: 'Track ROI' }
+            ],
+            techs: ['Mailchimp', 'Klaviyo', 'ConvertKit', 'ActiveCampaign', 'HubSpot'],
+            whyCards: [
+                { icon: 'fa-envelope', title: 'High ROI', desc: '$42 return per $1 spent' },
+                { icon: 'fa-chart-line', title: 'Automation', desc: 'Save time with automation' },
+                { icon: 'fa-bullseye', title: 'Targeted', desc: 'Segment your audience' }
+            ],
+            projects: [
+                { img: './static/palor.jpeg', title: 'E-commerce Brand', desc: 'Abandoned cart recovery', result: '+35% Conversions' }
+            ],
+            testimonial: { img: 'https://randomuser.me/api/portraits/women/45.jpg', name: 'Lisa Wong', text: 'Our email open rates have increased by 50% thanks to BarqNova!' }
+        },
+        ppc: {
+            title: 'PPC Advertising', desc: 'Google Ads, Facebook Ads, and retargeting campaigns that deliver measurable results.',
+            detailTitle: 'PPC Advertising',
+            detailDesc: 'Pay-per-click (PPC) advertising is a digital marketing model where advertisers pay a fee each time one of their ads is clicked. It\'s a way of buying visits to your site, rather than attempting to earn those visits organically. Our PPC services help you reach your target audience, drive qualified traffic, and maximize your return on ad spend.',
+            detailFeatures: [
+                'Comprehensive keyword research and negative keyword management',
+                'Ad copy creation and A/B testing for better CTR',
+                'Landing page optimization for higher conversion rates',
+                'Bid management and budget optimization',
+                'Retargeting campaigns to re-engage lost visitors',
+                'Detailed ROI reporting and analysis'
+            ],
+            sideImg: './static/PPC Services card.jpg',
+            features: [
+                { img: 'https://cdn-icons-png.flaticon.com/512/1695/1695799.png', title: 'Google Ads', desc: 'Search & display ads' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/4138/4138124.png', title: 'Social Ads', desc: 'Facebook & Instagram' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/1995/1995576.png', title: 'Retargeting', desc: 'Re-engage visitors' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/3063/3063238.png', title: 'ROI Optimization', desc: 'Maximize returns' }
+            ],
+            techs: ['Google Ads', 'Meta Ads Manager', 'LinkedIn Ads', 'TikTok Ads', 'Google Analytics'],
+            whyCards: [
+                { icon: 'fa-chart-line', title: 'High ROI', desc: 'Average 300%+ ROI' },
+                { icon: 'fa-clock', title: 'Fast Results', desc: 'See results within days' },
+                { icon: 'fa-bullseye', title: 'Targeted', desc: 'Reach ideal customers' }
+            ],
+            projects: [
+                { img: './static/palor.jpeg', title: 'FitTrack App', desc: 'App install campaign', result: '50k+ Downloads' }
+            ],
+            testimonial: { img: 'https://randomuser.me/api/portraits/men/32.jpg', name: 'James Wilson', text: 'Our ROAS went from 2x to 5x after switching to BarqNova!' }
+        },
+        branding: {
+            title: 'Brand Identity', desc: 'Logo design, brand guidelines, and visual identity systems that make you stand out.',
+            detailTitle: 'Brand Identity',
+            detailDesc: 'Brand identity is the visible elements of a brand, such as color, design, and logo, that identify and distinguish the brand in consumers\' minds. Our brand identity services help you create a memorable, cohesive brand that resonates with your target audience and sets you apart from competitors.',
+            detailFeatures: [
+                'Professional logo design that represents your brand values',
+                'Complete color palette development for brand consistency',
+                'Typography selection that enhances brand personality',
+                'Comprehensive brand guidelines document',
+                'Business card and stationery design',
+                'Social media kit and brand assets'
+            ],
+            sideImg: './static/Brand Identity card.jpg',
+            features: [
+                { img: 'https://cdn-icons-png.flaticon.com/512/1055/1055687.png', title: 'Logo Design', desc: 'Unique logo creation' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/1995/1995576.png', title: 'Brand Guidelines', desc: 'Consistent branding' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/3820/3820273.png', title: 'Color Palette', desc: 'Strategic colors' },
+                { img: './static/taypo.jpg', title: 'Typography', desc: 'Font selection' }
+            ],
+            techs: ['Adobe Illustrator', 'Photoshop', 'Figma', 'Canva', 'InDesign'],
+            whyCards: [
+                { icon: 'fa-trademark', title: 'Memorable', desc: 'Stand out from competitors' },
+                { icon: 'fa-chart-line', title: 'Trust', desc: 'Build brand credibility' },
+                { icon: 'fa-palette', title: 'Professional', desc: 'Expert design team' }
+            ],
+            projects: [
+                { img: './static/palor.jpeg', title: 'GreenLeaf', desc: 'Complete rebrand', result: 'Award Winner' }
+            ],
+            testimonial: { img: 'https://randomuser.me/api/portraits/women/68.jpg', name: 'Maria Garcia', text: 'Our new brand identity has received so many compliments!' }
+        },
+        video: {
+            title: 'Video Production', desc: 'Professional videos, commercials, and motion graphics that captivate your audience.',
+            detailTitle: 'Video Production',
+            detailDesc: 'Video production is the process of producing video content for various purposes including marketing, entertainment, education, and more. Our video production services help you create compelling visual stories that capture attention, communicate your message effectively, and drive audience engagement.',
+            detailFeatures: [
+                'Scriptwriting and storyboarding for compelling narratives',
+                'Professional filming with high-quality equipment',
+                'Voice-over recording and audio mixing',
+                'Motion graphics and animation production',
+                'Color grading and video editing',
+                'Optimized videos for social media platforms'
+            ],
+            sideImg: './static/Video Production card.jpg',
+            features: [
+                { img: 'https://cdn-icons-png.flaticon.com/512/2991/2991150.png', title: 'Explainer Videos', desc: 'Tell your story' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/4138/4138124.png', title: 'Commercials', desc: 'TV & digital ads' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/1995/1995576.png', title: 'Motion Graphics', desc: 'Animated content' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/3820/3820273.png', title: 'Social Videos', desc: 'Instagram/TikTok ready' }
+            ],
+            techs: ['Adobe Premiere', 'After Effects', 'DaVinci Resolve', 'Final Cut Pro'],
+            whyCards: [
+                { icon: 'fa-video', title: 'Professional', desc: 'High-quality production' },
+                { icon: 'fa-chart-line', title: 'Engaging', desc: 'Increase viewer retention' },
+                { icon: 'fa-clock', title: 'Fast Turnaround', desc: 'Quick delivery' }
+            ],
+            projects: [
+                { img: './static/palor.jpeg', title: 'Product Launch', desc: 'Explainer video', result: '1M+ Views' }
+            ],
+            testimonial: { img: 'https://randomuser.me/api/portraits/men/32.jpg', name: 'Robert Taylor', text: 'The explainer video they created is amazing! Our conversions increased significantly.' }
+        },
+        analytics: {
+            title: 'Analytics & Insights', desc: 'Data-driven decisions with custom reporting dashboards.',
+            detailTitle: 'Analytics & Insights',
+            detailDesc: 'Analytics is the systematic computational analysis of data or statistics. It is used for the discovery, interpretation, and communication of meaningful patterns in data. Our analytics services help you make data-driven decisions, track key performance indicators, and optimize your business for growth.',
+            detailFeatures: [
+                'Complete Google Analytics 4 setup and configuration',
+                'Custom dashboard creation with key metrics visualization',
+                'Conversion tracking and goal setup',
+                'User behavior analysis and heatmaps',
+                'Monthly performance reports with actionable insights',
+                'A/B testing recommendations and implementation'
+            ],
+            sideImg: './static/Analytics.jpg',
+            features: [
+                { img: 'https://cdn-icons-png.flaticon.com/512/3063/3063238.png', title: 'Google Analytics', desc: 'Complete setup' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/1695/1695799.png', title: 'Custom Dashboards', desc: 'Tailored reports' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/1995/1995576.png', title: 'Conversion Tracking', desc: 'Track ROI' },
+                { img: 'https://cdn-icons-png.flaticon.com/512/3820/3820273.png', title: 'Actionable Insights', desc: 'Growth recommendations' }
+            ],
+            techs: ['Google Analytics', 'Looker Studio', 'Tableau', 'Power BI', 'Hotjar', 'Mixpanel'],
+            whyCards: [
+                { icon: 'fa-chart-pie', title: 'Data-Driven', desc: 'Make informed decisions' },
+                { icon: 'fa-chart-line', title: 'Track ROI', desc: 'Measure performance' },
+                { icon: 'fa-lightbulb', title: 'Actionable', desc: 'Growth insights' }
+            ],
+            projects: [
+                { img: './static/palor.jpeg', title: 'E-commerce Store', desc: 'Analytics setup', result: '+40% Conversion Rate' }
+            ],
+            testimonial: { img: 'https://randomuser.me/api/portraits/women/45.jpg', name: 'Nina Patel', text: 'The insights from their analytics helped us increase conversions by 40%!' }
+        }
+    };
+
+    // Get service parameter from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const service = urlParams.get('service') || 'web';
+    const data = serviceData[service];
+
+    if (data) {
+        // Update hero section
+        document.getElementById('service-title').innerHTML = data.title;
+        document.getElementById('why-title').innerHTML = data.title;
+        document.getElementById('service-desc').textContent = data.desc;
+        
+        // Update detail section (text left, image right)
+        document.getElementById('detail-title').innerHTML = data.detailTitle;
+        document.getElementById('detail-description').textContent = data.detailDesc;
+        document.getElementById('detail-img').src = data.sideImg;
+        
+        // Update detail features list
+        const detailFeaturesList = document.getElementById('detail-features');
+        detailFeaturesList.innerHTML = '';
+        data.detailFeatures.forEach(feature => {
+            const li = document.createElement('li');
+            li.innerHTML = `<i class="fas fa-check-circle"></i> ${feature}`;
+            detailFeaturesList.appendChild(li);
+        });
+
+        // Update features grid
+        const featuresGrid = document.getElementById('service-features');
+        featuresGrid.innerHTML = '';
+        data.features.forEach(f => {
+            const card = document.createElement('div');
+            card.className = 'feature-card';
+            card.innerHTML = `<img src="${f.img}" alt="${f.title}"><div><h4>${f.title}</h4><p style="color: var(--light-gray);">${f.desc}</p></div>`;
+            featuresGrid.appendChild(card);
+        });
+
+        // Update tech stack
+        const techStack = document.getElementById('tech-stack');
+        techStack.innerHTML = '';
+        data.techs.forEach(tech => {
+            const badge = document.createElement('span');
+            badge.className = 'tech-badge';
+            badge.textContent = tech;
+            techStack.appendChild(badge);
+        });
+
+        // Update why choose grid
+        const whyGrid = document.getElementById('why-grid');
+        whyGrid.innerHTML = '';
+        data.whyCards.forEach(card => {
+            const whyCard = document.createElement('div');
+            whyCard.className = 'why-card';
+            whyCard.innerHTML = `<i class="fas ${card.icon}"></i><h3>${card.title}</h3><p style="color: var(--light-gray);">${card.desc}</p>`;
+            whyGrid.appendChild(whyCard);
+        });
+
+        // Update projects showcase
+        const projectShowcase = document.getElementById('project-showcase');
+        projectShowcase.innerHTML = '';
+        data.projects.forEach(proj => {
+            const project = document.createElement('div');
+            project.className = 'project-item';
+            project.innerHTML = `<img src="${proj.img}" alt="${proj.title}"><div class="project-info"><h3>${proj.title}</h3><p>${proj.desc}</p><span style="color: #10b981;">${proj.result}</span></div>`;
+            projectShowcase.appendChild(project);
+        });
+
+        // Update testimonial
+        const testimonial = document.getElementById('testimonial');
+        testimonial.innerHTML = `<img src="${data.testimonial.img}" alt="Client"><div><p style="font-style: italic;">"${data.testimonial.text}"</p><h4>- ${data.testimonial.name}</h4></div>`;
+    }
+
+    // Animation on scroll for text and image
+    const observerOptions = {
+        threshold: 0.3,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+            }
+        });
+    }, observerOptions);
+
+    const textElement = document.querySelector('.service-detail-text');
+    const imageElement = document.querySelector('.service-detail-image');
+    
+    if (textElement) observer.observe(textElement);
+    if (imageElement) observer.observe(imageElement);
+
+    // FAQ Accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        question.addEventListener('click', () => {
+            const isOpen = answer.style.maxHeight;
+            document.querySelectorAll('.faq-answer').forEach(a => a.style.maxHeight = null);
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            if (!isOpen) {
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                item.classList.add('active');
+            }
+        });
+    });
+
+    // AI Chat Bot
+    const chatToggle = document.getElementById('chatToggle');
+    const chatWindow = document.getElementById('chatWindow');
+    const closeChat = document.getElementById('closeChat');
+    const sendChat = document.getElementById('sendChat');
+    const chatInput = document.getElementById('chatInput');
+    const chatMessages = document.getElementById('chatMessages');
+
+    chatToggle.addEventListener('click', () => {
+        chatWindow.style.display = chatWindow.style.display === 'none' ? 'block' : 'none';
+    });
+    closeChat.addEventListener('click', () => {
+        chatWindow.style.display = 'none';
+    });
+
+    function addMessage(message, isUser = false) {
+        const msgDiv = document.createElement('div');
+        msgDiv.style.marginBottom = '1rem';
+        msgDiv.style.textAlign = isUser ? 'right' : 'left';
+        msgDiv.innerHTML = `<span style="background: ${isUser ? 'var(--primary)' : 'var(--glass)'}; padding: 0.5rem 1rem; border-radius: 15px; display: inline-block;">${message}</span>`;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    sendChat.addEventListener('click', () => {
+        const message = chatInput.value.trim();
+        if (message) {
+            addMessage(message, true);
+            chatInput.value = '';
+            setTimeout(() => {
+                let reply = "Thanks for your message! Our team will get back to you shortly.";
+                if (message.toLowerCase().includes('price') || message.toLowerCase().includes('cost')) {
+                    reply = "We offer custom pricing based on your needs. Would you like to schedule a free consultation to discuss your specific requirements?";
+                } else if (message.toLowerCase().includes('time') || message.toLowerCase().includes('duration')) {
+                    reply = "Project timelines typically range from 2-6 weeks depending on complexity. We'll provide a detailed timeline during our initial consultation.";
+                }
+                addMessage(reply, false);
+            }, 500);
+        }
+    });
+
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendChat.click();
+    });
+</script>
+</body>
+</html>
