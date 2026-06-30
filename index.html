@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarqNova | Premium Digital Growth Agency</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./static/logo.jpeg">
+    <link rel="shortcut icon" href="./static/logo.jpeg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .marquee { background: rgba(99,102,241,0.1); padding: 1rem 0; overflow: hidden; white-space: nowrap; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
+        .marquee-content { display: inline-block; animation: marquee 20s linear infinite; }
+        .marquee-content span { margin: 0 2rem; color: var(--primary-light); }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .showcase-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin: 3rem 0; }
+        .showcase-item { position: relative; border-radius: 20px; overflow: hidden; cursor: pointer; }
+        .showcase-item img { width: 100%; height: 280px; object-fit: cover; transition: transform 0.5s; }
+        .showcase-item:hover img { transform: scale(1.1); }
+        .showcase-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 2rem; transform: translateY(100%); transition: transform 0.3s; }
+        .showcase-item:hover .showcase-overlay { transform: translateY(0); }
+        
+        /* Video Section Styles */
+        .video-section {
+            margin: 4rem 0;
+        }
+        .video-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        .video-container {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            background: #000;
+            height: 350px;
+        }
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .side-image-container {
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            height: 350px;
+        }
+        .side-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .side-image-container:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Service Cards Flip Styles - Updated Image Size */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .service-card {
+            background: transparent;
+            perspective: 1000px;
+            cursor: pointer;
+            height: 420px;
+        }
+        .service-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .service-card.flipped .service-card-inner {
+            transform: rotateY(180deg);
+        }
+        .service-card-front, .service-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 24px;
+            padding: 2rem;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+        }
+        .service-card-back {
+            transform: rotateY(180deg);
+            background: var(--gradient-primary);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .service-card-back ul {
+            list-style: none;
+            margin: 1.5rem 0;
+            text-align: left;
+            padding-left: 1rem;
+        }
+        .service-card-back li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .service-card-back .btn-sm {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.8rem;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            margin-top: 1rem;
+        }
+        .service-card-back .btn-sm:hover {
+            background: white;
+            color: var(--primary);
+        }
+        /* Updated Image Size - Larger */
+        .service-img {
+            width: 100%;
+            height: 180px;
+            border-radius: 18px;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+        }
+        .service-card-front h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+        }
+        .service-card-front p {
+            color: var(--light-gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+        
+        /* Popup Menu Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .popup-menu {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            animation: popupSlide 0.3s ease;
+        }
+        @keyframes popupSlide {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .popup-menu h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .popup-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        .popup-buttons .btn {
+            padding: 0.6rem 1.2rem;
+        }
+        .close-popup {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+            background: rgba(255,255,255,0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .close-popup:hover {
+            background: var(--primary);
+            transform: rotate(90deg);
+        }
+        
+        /* Header Logo Larger */
+        .logo-img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+        
+        /* Footer Logo Larger */
+        .footer-logo-img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+        .footer-logo span {
+            font-size: 1.5rem;
+        }
+        
+        /* Particles Canvas Background */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        /* Custom Cursor Styles */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.2s ease;
+        }
+        
+        .cursor-follower {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary-light);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .video-wrapper { grid-template-columns: 1fr; }
+            .video-container, .side-image-container { height: 250px; }
+            .showcase-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
+            .logo-img { width: 40px; height: 40px; }
+            .logo-text { font-size: 1.3rem; }
+            .cursor, .cursor-follower { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Particles Canvas Background -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- Custom Cursor Elements -->
+<div class="cursor"></div>
+<div class="cursor-follower"></div>
+
+<!-- Popup Menu -->
+<div id="popupOverlay" class="popup-overlay">
+    <div class="close-popup" id="closePopup"><i class="fas fa-times"></i></div>
+    <div class="popup-menu" id="popupMenu">
+        <h3 id="popupTitle">Service Menu</h3>
+        <p id="popupDesc">Choose an option to proceed</p>
+        <div class="popup-buttons">
+            <a href="#" id="popupLearnMore" class="btn btn-outline">Learn More</a>
+            <a href="contact.html" id="popupGetQuote" class="btn btn-primary">Get Quote</a>
+        </div>
+    </div>
+</div>
+
+<!-- AI Chat Bot Widget -->
+<div id="aiChatbot">
+    <div id="chatToggle">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+    <div id="chatWindow" style="display: none;">
+        <div style="background: var(--gradient-primary); padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <span><i class="fas fa-robot"></i> BarqNova AI Assistant</span>
+            <span id="closeChat" style="cursor: pointer;"><i class="fas fa-times"></i></span>
+        </div>
+        <div id="chatMessages" style="height: 300px; overflow-y: auto; padding: 1rem;">
+            <div style="margin-bottom: 1rem;"><span style="background: var(--primary); padding: 0.5rem 1rem; border-radius: 15px; display: inline-block;">Hello! How can I help you today?</span></div>
+        </div>
+        <div style="padding: 1rem; border-top: 1px solid var(--glass-border); display: flex; gap: 0.5rem;">
+            <input type="text" id="chatInput" placeholder="Ask me anything..." style="flex: 1; padding: 0.8rem; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 25px; color: white;">
+            <button id="sendChat" style="background: var(--primary); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer;"><i class="fas fa-paper-plane" style="color: white;"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/923275124828" target="_blank" id="whatsappBtn">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<header class="header" id="header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="./static/logo.jpeg" alt="BarqNova Logo" class="logo-img">
+            <span class="logo-text">Barq<span>Nova</span></span>
+        </a>
+        <nav class="nav" id="nav">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="portfolio.html" class="nav-link">Meet our Team </a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="contact.html" class="btn btn-primary">Get Started <i class="fas fa-arrow-right"></i></a>
+        <button class="mobile-toggle" id="mobileToggle">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="hero-orb orb-1"></div>
+            <div class="hero-orb orb-2"></div>
+            <div class="hero-orb orb-3"></div>
+        </div>
+        <div class="container hero-container">
+            <div class="hero-content reveal">
+                <div class="hero-badge"><span class="badge-dot"></span><span>🏆 Top Rated Agency 2025</span></div>
+                <h1 class="hero-title">We Build <span class="gradient-text">Digital Growth</span><br>That Actually <span class="neon-text">Converts</span></h1>
+                <p class="hero-desc">BarqNova is a full-service digital agency specializing in web development, performance marketing, SEO, content creation, and creative design. 50+ projects delivered with 98% client satisfaction.</p>
+                <div class="hero-buttons">
+                    <a href="portfolio.html" class="btn btn-primary btn-large">View Portfolio <i class="fas fa-arrow-right"></i></a>
+                    <a href="contact.html" class="btn btn-outline btn-large">Free Consultation <i class="fas fa-calendar"></i></a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item"><div class="stat-number counter" data-target="50">0</div><div class="stat-label">Projects Done</div></div>
+                    <div class="stat-item"><div class="stat-number counter" data-target="98">0</div><div class="stat-label">Client Satisfaction</div></div>
+                    <div class="stat-item"><div class="stat-number counter" data-target="212">0</div><div class="stat-label">Avg. ROI Growth</div></div>
+                </div>
+            </div>
+            <div class="hero-image reveal">
+                <img class="image-3d" src="./static/Digital Marketing.jpg" alt="Digital Agency Team">
+                <div class="floating-card floating-1"><i class="fas fa-chart-line" style="color:#00ff88"></i><span>+312% ROI</span></div>
+                <div class="floating-card floating-2"><i class="fas fa-users" style="color:#6366f1"></i><span>150+ Clients</span></div>
+                <div class="floating-card floating-3"><i class="fas fa-trophy" style="color:#f59e0b"></i><span>#1 Agency</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <div class="container video-section">
+        <div class="video-wrapper">
+            <div class="video-container">
+                <video autoplay muted loop playsinline>
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-typography-of-a-digital-website-36989-large.mp4" type="video/mp4">
+                    <iframe src="https://assets.pinterest.com/ext/embed.html?id=859695016382847287" height="445" width="345" frameborder="0" scrolling="no" ></iframe>
+                </video>
+            </div>
+            <div class="side-image-container">
+                <img src="./static/Digital Marketing-sidelogo.jpg" alt="Our Team Working">
+            </div>
+        </div>
+    </div>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            <span>🚀 Web Development</span> <span>📈 Digital Marketing</span> <span>🔍 SEO Optimization</span>
+            <span>📱 Social Media Management</span> <span>✍️ Content Creation</span> <span>📧 Email Marketing</span>
+            <span>🎯 PPC Advertising</span> <span>🎨 Brand Identity</span> <span>🎬 Video Production</span>
+            <span>📊 Analytics</span> <span>🚀 Web Development</span> <span>📈 Digital Marketing</span>
+        </div>
+    </div>
+
+    <section style="background: rgba(255,255,255,0.02); padding: 2rem 0;">
+        <div class="container">
+            <p style="text-align: center; color: var(--light-gray); font-size: 0.8rem; letter-spacing: 2px;">TRUSTED BY 150+ COMPANIES WORLDWIDE</p>
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem; margin-top: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="fab fa-google"></i> Google</div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="fab fa-microsoft"></i> Microsoft</div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="fab fa-amazon"></i> Amazon</div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="fab fa-shopify"></i> Shopify</div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="fab fa-salesforce"></i> Salesforce</div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;"><i class="fab fa-slack"></i> Slack</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <div class="section-badge"><span class="badge-line"></span><span class="badge-text">What We Do</span><span class="badge-line"></span></div>
+            <h2 class="section-title">Complete <span class="gradient-text">Digital Solutions</span></h2>
+            <p style="text-align: center; color: var(--light-gray); max-width: 600px; margin: 0 auto 2rem;">10+ specialized services to grow your brand online and dominate your market. Click on any card to flip and see options.</p>
+            
+            <div class="services-grid" id="servicesGrid">
+                <div class="service-card" data-service="web" data-name="Web Development" data-link="service-detail.html?service=web">
+                    <div class="service-card-inner">
+                        <div class="service-card-front">
+                            <img src="./static/Website Development.jpg" alt="Web Development" class="service-img">
+                            <h3>Web Development</h3>
+                            <p>Custom websites, e-commerce stores, and web applications built for speed and conversions.</p>
+                            <span style="color: var(--primary-light);">Click to flip →</span>
+                        </div>
+                        <div class="service-card-back">
+                            <h3>Web Development</h3>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Responsive Design</li>
+                                <li><i class="fas fa-check-circle"></i> SEO Optimized</li>
+                                <li><i class="fas fa-check-circle"></i> E-commerce Ready</li>
+                                <li><i class="fas fa-check-circle"></i> 24/7 Support</li>
+                            </ul>
+                            <button class="btn btn-sm btn-outline service-action-btn" data-service="web">Options →</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card" data-service="marketing" data-name="Digital Marketing" data-link="service-detail.html?service=marketing">
+                    <div class="service-card-inner">
+                        <div class="service-card-front">
+                            <img src="./static/Digital Marketing card.jpg" alt="Digital Marketing" class="service-img">
+                            <h3>Digital Marketing</h3>
+                            <p>Data-driven Facebook, Google, and TikTok ads that deliver measurable ROI.</p>
+                            <span style="color: var(--primary-light);">Click to flip →</span>
+                        </div>
+                        <div class="service-card-back">
+                            <h3>Digital Marketing</h3>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> PPC Campaigns</li>
+                                <li><i class="fas fa-check-circle"></i> Social Media Ads</li>
+                                <li><i class="fas fa-check-circle"></i> Email Marketing</li>
+                                <li><i class="fas fa-check-circle"></i> Analytics Reporting</li>
+                            </ul>
+                            <button class="btn btn-sm btn-outline service-action-btn" data-service="marketing">Options →</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card" data-service="seo" data-name="SEO Optimization" data-link="service-detail.html?service=seo">
+                    <div class="service-card-inner">
+                        <div class="service-card-front">
+                            <img src="./static/SEO Optimization card.jpg" alt="SEO" class="service-img">
+                            <h3>SEO Optimization</h3>
+                            <p>Rank #1 on Google with our proven white-hat SEO strategies.</p>
+                            <span style="color: var(--primary-light);">Click to flip →</span>
+                        </div>
+                        <div class="service-card-back">
+                            <h3>SEO Optimization</h3>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Keyword Research</li>
+                                <li><i class="fas fa-check-circle"></i> On-Page SEO</li>
+                                <li><i class="fas fa-check-circle"></i> Link Building</li>
+                                <li><i class="fas fa-check-circle"></i> Technical Audits</li>
+                            </ul>
+                            <button class="btn btn-sm btn-outline service-action-btn" data-service="seo">Options →</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card" data-service="social" data-name="Social Media Management" data-link="service-detail.html?service=social">
+                    <div class="service-card-inner">
+                        <div class="service-card-front">
+                            <img src="./static/Social Media Marketing card.jpg" alt="Social Media" class="service-img">
+                            <h3>Social Media Mgmt</h3>
+                            <p>Build engaged communities across Instagram, Facebook, LinkedIn, and TikTok.</p>
+                            <span style="color: var(--primary-light);">Click to flip →</span>
+                        </div>
+                        <div class="service-card-back">
+                            <h3>Social Media Mgmt</h3>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Content Strategy</li>
+                                <li><i class="fas fa-check-circle"></i> Community Management</li>
+                                <li><i class="fas fa-check-circle"></i> Paid Ads</li>
+                                <li><i class="fas fa-check-circle"></i> Analytics</li>
+                            </ul>
+                            <button class="btn btn-sm btn-outline service-action-btn" data-service="social">Options →</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card" data-service="content" data-name="Content Creation" data-link="service-detail.html?service=content">
+                    <div class="service-card-inner">
+                        <div class="service-card-front">
+                            <img src="./static/Content Creation card.jpg" alt="Content Creation" class="service-img">
+                            <h3>Content Creation</h3>
+                            <p>Blog posts, articles, and copywriting that tell your brand story and convert.</p>
+                            <span style="color: var(--primary-light);">Click to flip →</span>
+                        </div>
+                        <div class="service-card-back">
+                            <h3>Content Creation</h3>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Blog Writing</li>
+                                <li><i class="fas fa-check-circle"></i> Copywriting</li>
+                                <li><i class="fas fa-check-circle"></i> Video Scripts</li>
+                                <li><i class="fas fa-check-circle"></i> Newsletter Content</li>
+                            </ul>
+                            <button class="btn btn-sm btn-outline service-action-btn" data-service="content">Options →</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card" data-service="email" data-name="Email Marketing" data-link="service-detail.html?service=email">
+                    <div class="service-card-inner">
+                        <div class="service-card-front">
+                            <img src="./static/Email Marketing Expert card.jpg" alt="Email Marketing" class="service-img">
+                            <h3>Email Marketing</h3>
+                            <p>Automated campaigns that nurture leads and drive repeat sales.</p>
+                            <span style="color: var(--primary-light);">Click to flip →</span>
+                        </div>
+                        <div class="service-card-back">
+                            <h3>Email Marketing</h3>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Campaign Strategy</li>
+                                <li><i class="fas fa-check-circle"></i> Automation Workflows</li>
+                                <li><i class="fas fa-check-circle"></i> A/B Testing</li>
+                                <li><i class="fas fa-check-circle"></i> Analytics</li>
+                            </ul>
+                            <button class="btn btn-sm btn-outline service-action-btn" data-service="email">Options →</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card" data-service="ppc" data-name="PPC Advertising" data-link="service-detail.html?service=ppc">
+                    <div class="service-card-inner">
+                        <div class="service-card-front">
+                            <img src="./static/PPC Services card.jpg" alt="PPC" class="service-img">
+                            <h3>PPC Advertising</h3>
+                            <p>Google Ads, Facebook Ads, and retargeting campaigns that deliver results.</p>
+                            <span style="color: var(--primary-light);">Click to flip →</span>
+                        </div>
+                        <div class="service-card-back">
+                            <h3>PPC Advertising</h3>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Google Ads</li>
+                                <li><i class="fas fa-check-circle"></i> Facebook Ads</li>
+                                <li><i class="fas fa-check-circle"></i> Retargeting</li>
+                                <li><i class="fas fa-check-circle"></i> ROI Optimization</li>
+                            </ul>
+                            <button class="btn btn-sm btn-outline service-action-btn" data-service="ppc">Options →</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card" data-service="branding" data-name="Brand Identity" data-link="service-detail.html?service=branding">
+                    <div class="service-card-inner">
+                        <div class="service-card-front">
+                            <img src="./static/Brand Identity card.jpg" alt="Branding" class="service-img">
+                            <h3>Brand Identity</h3>
+                            <p>Logo design, brand guidelines, and visual identity systems that stand out.</p>
+                            <span style="color: var(--primary-light);">Click to flip →</span>
+                        </div>
+                        <div class="service-card-back">
+                            <h3>Brand Identity</h3>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Logo Design</li>
+                                <li><i class="fas fa-check-circle"></i> Brand Guidelines</li>
+                                <li><i class="fas fa-check-circle"></i> Color Palette</li>
+                                <li><i class="fas fa-check-circle"></i> Typography</li>
+                            </ul>
+                            <button class="btn btn-sm btn-outline service-action-btn" data-service="branding">Options →</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card" data-service="video" data-name="Video Production" data-link="service-detail.html?service=video">
+                    <div class="service-card-inner">
+                        <div class="service-card-front">
+                            <img src="./static/Video Production card.jpg" alt="Video" class="service-img">
+                            <h3>Video Production</h3>
+                            <p>Professional videos, commercials, and motion graphics that captivate.</p>
+                            <span style="color: var(--primary-light);">Click to flip →</span>
+                        </div>
+                        <div class="service-card-back">
+                            <h3>Video Production</h3>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Explainer Videos</li>
+                                <li><i class="fas fa-check-circle"></i> Commercials</li>
+                                <li><i class="fas fa-check-circle"></i> Motion Graphics</li>
+                                <li><i class="fas fa-check-circle"></i> Social Media Videos</li>
+                            </ul>
+                            <button class="btn btn-sm btn-outline service-action-btn" data-service="video">Options →</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card" data-service="analytics" data-name="Analytics & Insights" data-link="service-detail.html?service=analytics">
+                    <div class="service-card-inner">
+                        <div class="service-card-front">
+                            <img src="./static/Analytics.jpg" alt="Analytics" class="service-img">
+                            <h3>Analytics & Insights</h3>
+                            <p>Data-driven decisions with custom reporting dashboards.</p>
+                            <span style="color: var(--primary-light);">Click to flip →</span>
+                        </div>
+                        <div class="service-card-back">
+                            <h3>Analytics & Insights</h3>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Google Analytics Setup</li>
+                                <li><i class="fas fa-check-circle"></i> Custom Dashboards</li>
+                                <li><i class="fas fa-check-circle"></i> Conversion Tracking</li>
+                                <li><i class="fas fa-check-circle"></i> Monthly Reports</li>
+                            </ul>
+                            <button class="btn btn-sm btn-outline service-action-btn" data-service="analytics">Options →</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: rgba(255,255,255,0.02);">
+        <div class="container">
+            <div class="section-badge"><span class="badge-line"></span><span class="badge-text">Why Choose Us</span><span class="badge-line"></span></div>
+            <h2 class="section-title">Why <span class="gradient-text">BarqNova?</span></h2>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 3rem;">
+                <div style="text-align: center; padding: 2rem; background: var(--glass); border-radius: 20px;"><i class="fas fa-trophy" style="font-size: 2rem; color: var(--primary-light);"></i><h3 style="margin: 1rem 0;">Proven Results</h3><p style="color: var(--light-gray);">98% client satisfaction with measurable ROI</p></div>
+                <div style="text-align: center; padding: 2rem; background: var(--glass); border-radius: 20px;"><i class="fas fa-users" style="font-size: 2rem; color: var(--primary-light);"></i><h3 style="margin: 1rem 0;">Expert Team</h3><p style="color: var(--light-gray);">25+ professionals with 10+ years experience</p></div>
+                <div style="text-align: center; padding: 2rem; background: var(--glass); border-radius: 20px;"><i class="fas fa-clock" style="font-size: 2rem; color: var(--primary-light);"></i><h3 style="margin: 1rem 0;">Fast Delivery</h3><p style="color: var(--light-gray);">On-time project completion with regular updates</p></div>
+                <div style="text-align: center; padding: 2rem; background: var(--glass); border-radius: 20px;"><i class="fas fa-headset" style="font-size: 2rem; color: var(--primary-light);"></i><h3 style="margin: 1rem 0;">24/7 Support</h3><p style="color: var(--light-gray);">Round-the-clock assistance you can trust</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <div class="container">
+            <div class="section-badge"><span class="badge-line"></span><span class="badge-text">Recent Work</span><span class="badge-line"></span></div>
+            <h2 class="section-title">Projects That <span class="gradient-text">Deliver Results</span></h2>
+            <div class="showcase-grid">
+                <div class="showcase-item"><img src="./static/palor.jpeg" alt="Project 1"><div class="showcase-overlay"><h3>LuxeStyle Fashion</h3><p>E-commerce + TikTok Ads</p><span style="color: #10b981;">+312% ROI</span></div></div>
+                <div class="showcase-item"><img src="./static/parwaz.jpeg" alt="Project 2"><div class="showcase-overlay"><h3>Finwise AI</h3><p>SaaS Marketing</p><span style="color: #10b981;">+400% Traffic</span></div></div>
+                <div class="showcase-item"><img src="./static/cart.jpeg" alt="Project 3"><div class="showcase-overlay"><h3>Burger House</h3><p>Local SEO</p><span style="color: #10b981;">+200% Foot Traffic</span></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: rgba(255,255,255,0.02);">
+        <div class="container">
+            <div class="section-badge"><span class="badge-line"></span><span class="badge-text">Testimonials</span><span class="badge-line"></span></div>
+            <h2 class="section-title">What Our <span class="gradient-text">Clients Say</span></h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem;">
+                <!-- Real Client Review 1 - Nomi Mughal -->
+                <div style="background: var(--glass); border-radius: 24px; padding: 2rem;">
+                    <div style="color: #fbbf24; margin-bottom: 1rem;">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-style: italic;">"Unki team ka approach bohat clear aur professional hai. Har cheez explain karte hain aur reports bhi proper share hoti hain. Digital marketing ke liye reliable."</p>
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
+                        <div style="width: 50px; height: 50px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <span style="font-weight: bold;">NM</span>
+                        </div>
+                        <div>
+                            <h4>Nomi Mughal</h4>
+                            <p style="color: var(--light-gray);">Digital Marketing Client</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Real Client Review 2 - Arslan Ahmad Campaign Results -->
+                <div style="background: var(--glass); border-radius: 24px; padding: 2rem;">
+                    <div style="color: #fbbf24; margin-bottom: 1rem;">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-style: italic;">"Excellent campaign results! Our Facebook ads generated 35+ messaging conversations with amazing ROI. The team's targeting strategy is top-notch."</p>
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
+                        <div style="width: 50px; height: 50px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <span style="font-weight: bold;">AA</span>
+                        </div>
+                        <div>
+                            <h4>Arslan Ahmad</h4>
+                            <p style="color: var(--light-gray);">Business Owner</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Real Client Review 3 - General Client -->
+                <div style="background: var(--glass); border-radius: 24px; padding: 2rem;">
+                    <div style="color: #fbbf24; margin-bottom: 1rem;">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-style: italic;">"Highly recommended! Their team delivered exceptional results for our digital campaigns. Professional, responsive, and truly cares about client success."</p>
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
+                        <div style="width: 50px; height: 50px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <span style="font-weight: bold;">XS</span>
+                        </div>
+                        <div>
+                            <h4>Xiao Nai Shon</h4>
+                            <p style="color: var(--light-gray);">Satisfied Client</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-badge"><span class="badge-line"></span><span class="badge-text">Our Process</span><span class="badge-line"></span></div>
+            <h2 class="section-title">How We <span class="gradient-text">Work</span></h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem;">
+                <div style="text-align: center; padding: 2rem; background: var(--glass); border-radius: 20px;"><div style="width: 70px; height: 70px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 1rem;">1</div><h3>Discovery & Strategy</h3><p style="color: var(--light-gray);">We understand your business goals, target audience, and competition.</p></div>
+                <div style="text-align: center; padding: 2rem; background: var(--glass); border-radius: 20px;"><div style="width: 70px; height: 70px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 1rem;">2</div><h3>Design & Development</h3><p style="color: var(--light-gray);">Our team creates stunning designs and develops solutions with regular feedback.</p></div>
+                <div style="text-align: center; padding: 2rem; background: var(--glass); border-radius: 20px;"><div style="width: 70px; height: 70px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 1rem;">3</div><h3>Launch & Growth</h3><p style="color: var(--light-gray);">We launch, monitor performance, and continuously optimize for better results.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="cta-section">
+            <h2>Ready to <span class="gradient-text">Scale Your Business?</span></h2>
+            <p>Book a free strategy session with our experts and discover how we can help you grow 3x faster.</p>
+            <a href="contact.html" class="btn btn-primary btn-large">Get Free Consultation <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <a href="index.html" class="footer-logo">
+                    <img src="./static/logo.jpeg" alt="Logo" class="footer-logo-img">
+                    <span>Barq<span class="gradient-text">Nova</span></span>
+                </a>
+                <p class="footer-desc">We help businesses grow with cutting-edge digital solutions. 50+ projects delivered with 98% client satisfaction.</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/share/1B7BiNUmZX/"><i class="fab fa-facebook-f"></i></a>
+                    <!-- <a href="#"><i class="fab fa-twitter"></i></a> -->
+                    <a href="https://www.instagram.com/barqnova1122?igsh=YnR5NGVvNzl1dnQy"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/aqsa-iqbal-813996344?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin-in"></i></a>
+                    <!-- <a href="#"><i class="fab fa-youtube"></i></a> -->
+                </div>
+            </div>
+            <div class="footer-links"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+            <div class="footer-links"><h4>Our Services</h4><ul><li><a href="service-detail.html?service=web">Web Development</a></li><li><a href="service-detail.html?service=marketing">Digital Marketing</a></li><li><a href="service-detail.html?service=seo">SEO Optimization</a></li><li><a href="service-detail.html?service=social">Social Media</a></li><li><a href="service-detail.html?service=content">Content Creation</a></li></ul></div>
+            <div class="footer-links"><h4>Contact Info</h4><ul><li><i class="fas fa-envelope"></i> growthifydigitize@gmail.com</li><li><i class="fas fa-phone"></i> +92 3275124828</li><li><i class="fas fa-map-marker-alt"></i> Farash town , Lehtrar Rd, Ali pur, town ,45600 Islamabad</li><li><i class="fas fa-clock"></i> Mon-Fri: 10AM - 6PM</li></ul></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2025 BarqNova Digital Agency. All rights reserved. | <a href="#" style="color: var(--primary-light);">Privacy Policy</a> | <a href="#" style="color: var(--primary-light);">Terms of Service</a></p></div>
+    </div>
+</footer>
+
+<button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+<script>
+    // Custom Cursor Animation
+    (function() {
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+        
+        if (!cursor || !follower) return;
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
+            follower.style.transform = `translate(${e.clientX - 20}px, ${e.clientY - 20}px)`;
+        });
+        
+        const links = document.querySelectorAll('a, button, .btn, .service-card, .portfolio-card');
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+                follower.style.transform = 'scale(1.5)';
+            });
+            link.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                follower.style.transform = 'scale(1)';
+            });
+        });
+    })();
+
+    // Particles Canvas Background Animation
+    (function() {
+        const canvas = document.getElementById('particles-canvas');
+        if (!canvas) return;
+        
+        const ctx = canvas.getContext('2d');
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        let particles = [];
+        
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            initParticles();
+        }
+        
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.min(120, Math.floor(width * height / 10000));
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 2 + 1,
+                    alpha: Math.random() * 0.5 + 0.2,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.2,
+                });
+            }
+        }
+        
+        function drawParticles() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(99, 102, 241, ${p.alpha})`;
+                ctx.fill();
+                
+                p.x += p.vx;
+                p.y += p.vy;
+                
+                if (p.x < 0) p.x = width;
+                if (p.x > width) p.x = 0;
+                if (p.y < 0) p.y = height;
+                if (p.y > height) p.y = 0;
+            });
+            requestAnimationFrame(drawParticles);
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        drawParticles();
+    })();
+
+    // Service Card Flip and Popup Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Flip functionality
+        const serviceCards = document.querySelectorAll('.service-card');
+        
+        serviceCards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Don't flip if clicking on the action button
+                if (e.target.classList.contains('service-action-btn') || e.target.closest('.service-action-btn')) {
+                    return;
+                }
+                this.classList.toggle('flipped');
+            });
+        });
+        
+        // Popup functionality
+        const popupOverlay = document.getElementById('popupOverlay');
+        const popupTitle = document.getElementById('popupTitle');
+        const popupDesc = document.getElementById('popupDesc');
+        const popupLearnMore = document.getElementById('popupLearnMore');
+        const popupGetQuote = document.getElementById('popupGetQuote');
+        const closePopup = document.getElementById('closePopup');
+        
+        // Add click handlers to all action buttons
+        const actionBtns = document.querySelectorAll('.service-action-btn');
+        actionBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const service = this.dataset.service;
+                const card = this.closest('.service-card');
+                const serviceName = card.dataset.name;
+                const serviceLink = card.dataset.link;
+                
+                popupTitle.textContent = serviceName;
+                popupDesc.textContent = `What would you like to do with ${serviceName}?`;
+                popupLearnMore.href = serviceLink;
+                popupOverlay.style.display = 'flex';
+                
+                // Close any flipped card
+                serviceCards.forEach(c => {
+                    if (c !== card && c.classList.contains('flipped')) {
+                        c.classList.remove('flipped');
+                    }
+                });
+            });
+        });
+        
+        // Close popup
+        closePopup.addEventListener('click', function() {
+            popupOverlay.style.display = 'none';
+        });
+        
+        popupOverlay.addEventListener('click', function(e) {
+            if (e.target === popupOverlay) {
+                popupOverlay.style.display = 'none';
+            }
+        });
+        
+        // Close popup with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && popupOverlay.style.display === 'flex') {
+                popupOverlay.style.display = 'none';
+            }
+        });
+    });
+    
+    // Sticky Header
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+    
+    // Mobile Menu
+    const toggle = document.getElementById('mobileToggle');
+    const nav = document.getElementById('nav');
+    if (toggle) {
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
+            nav.classList.toggle('active');
+            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+        });
+    }
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            toggle?.classList.remove('active');
+            nav?.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+    
+    // Back to Top
+    const backTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backTop.classList.add('visible');
+        } else {
+            backTop.classList.remove('visible');
+        }
+    });
+    backTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // Counter Animation
+    const counters = document.querySelectorAll('.counter');
+    let counted = false;
+    function startCounters() {
+        if (counted) return;
+        counted = true;
+        counters.forEach(counter => {
+            const target = parseInt(counter.dataset.target);
+            let current = 0;
+            const increment = target / 80;
+            const update = () => {
+                current += increment;
+                if (current < target) {
+                    counter.innerText = Math.floor(current);
+                    requestAnimationFrame(update);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            update();
+        });
+    }
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) startCounters();
+    }, { threshold: 0.3 });
+    if (counters[0]) observer.observe(counters[0]);
+    
+    // Reveal Animation
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('active');
+        });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => revealObserver.observe(el));
+    
+    // Chat Bot
+    const chatToggle = document.getElementById('chatToggle');
+    const chatWindow = document.getElementById('chatWindow');
+    const closeChat = document.getElementById('closeChat');
+    const sendChat = document.getElementById('sendChat');
+    const chatInput = document.getElementById('chatInput');
+    const chatMessages = document.getElementById('chatMessages');
+    
+    if (chatToggle) {
+        chatToggle.addEventListener('click', () => {
+            chatWindow.style.display = chatWindow.style.display === 'none' ? 'block' : 'none';
+        });
+    }
+    if (closeChat) {
+        closeChat.addEventListener('click', () => {
+            chatWindow.style.display = 'none';
+        });
+    }
+    function addMessage(message, isUser = false) {
+        const msgDiv = document.createElement('div');
+        msgDiv.style.marginBottom = '1rem';
+        msgDiv.style.textAlign = isUser ? 'right' : 'left';
+        msgDiv.innerHTML = `<span style="background: ${isUser ? 'var(--primary)' : 'var(--glass)'}; padding: 0.5rem 1rem; border-radius: 15px; display: inline-block;">${message}</span>`;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    if (sendChat) {
+        sendChat.addEventListener('click', () => {
+            const message = chatInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                chatInput.value = '';
+                setTimeout(() => {
+                    let reply = "Thanks for your message! Our team will get back to you shortly.";
+                    if (message.toLowerCase().includes('price') || message.toLowerCase().includes('cost')) {
+                        reply = "Our pricing starts at $1,500 for basic websites. Would you like to schedule a free consultation?";
+                    } else if (message.toLowerCase().includes('time')) {
+                        reply = "Project timelines typically range from 2-6 weeks depending on complexity.";
+                    }
+                    addMessage(reply, false);
+                }, 500);
+            }
+        });
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendChat.click();
+        });
+    }
+</script>
+</body>
+</html>
