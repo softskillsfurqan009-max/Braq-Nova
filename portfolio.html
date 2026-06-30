@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarqNova | Our Team</title>
+    <link rel="icon" type="image/png" href="./static/logo.jpeg">
+    <link rel="shortcut icon" href="./static/logo.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .team-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+        }
+        .team-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--neon);
+            box-shadow: 0 20px 40px rgba(99,102,241,0.15);
+        }
+        .team-card .card-img {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .team-card .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            transition: 0.5s ease;
+        }
+        .team-card:hover .card-img img {
+            transform: scale(1.08);
+        }
+        .team-card .card-img i {
+            font-size: 5rem;
+            color: white;
+        }
+        .team-card .card-body {
+            padding: 1.5rem 1.8rem 2rem;
+            text-align: left;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .team-card .card-body h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.2rem;
+        }
+        .team-card .card-body .role {
+            color: var(--neon);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        .team-card .card-body .exp-badge {
+            display: inline-block;
+            background: rgba(0,255,136,0.08);
+            border: 1px solid var(--neon);
+            border-radius: 50px;
+            padding: 0.2rem 1rem;
+            font-size: 0.75rem;
+            color: var(--neon);
+            margin-bottom: 0.8rem;
+            align-self: flex-start;
+        }
+        .team-card .card-body .bio {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+        .team-card .card-body .expertise {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+        .team-card .card-body .expertise span {
+            background: rgba(99,102,241,0.12);
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            border: 1px solid var(--glass-border);
+            color: var(--light-gray);
+        }
+        .team-card .card-body .social {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+        .team-card .card-body .social a {
+            color: var(--light-gray);
+            transition: 0.3s;
+            font-size: 1.2rem;
+        }
+        .team-card .card-body .social a:hover {
+            color: var(--neon);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .team-grid { grid-template-columns: 1fr 1fr; }
+            .team-card .card-img {
+                height: 240px;
+            }
+        }
+        @media (max-width: 480px) {
+            .team-grid { grid-template-columns: 1fr; }
+            .team-card .card-img {
+                height: 260px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cursor"></div>
+<div class="cursor-follower"></div>
+<canvas id="particles-canvas"></canvas>
+
+<!-- AI Chat Bot Widget -->
+<div id="aiChatbot">
+    <div id="chatToggle"><i class="fas fa-comment-dots"></i></div>
+    <div id="chatWindow" style="display: none;">
+        <div style="background: var(--gradient-primary); padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <span><i class="fas fa-robot"></i> BarqNova AI Assistant</span>
+            <span id="closeChat" style="cursor: pointer;"><i class="fas fa-times"></i></span>
+        </div>
+        <div id="chatMessages" style="height: 300px; overflow-y: auto; padding: 1rem;">
+            <div style="margin-bottom: 1rem;"><span style="background: var(--primary); padding: 0.5rem 1rem; border-radius: 15px; display: inline-block;">Hello! How can I help you today?</span></div>
+        </div>
+        <div style="padding: 1rem; border-top: 1px solid var(--glass-border); display: flex; gap: 0.5rem;">
+            <input type="text" id="chatInput" placeholder="Ask me anything..." style="flex: 1; padding: 0.8rem; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 25px; color: white;">
+            <button id="sendChat" style="background: var(--primary); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer;"><i class="fas fa-paper-plane" style="color: white;"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/923275124828" target="_blank" id="whatsappBtn"><i class="fab fa-whatsapp"></i></a>
+
+<header class="header" id="header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="./static/logo.jpeg" alt="BarqNova Logo" class="logo-img">
+            <span class="logo-text">Barq<span>Nova</span></span>
+        </a>
+        <nav class="nav" id="nav">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="portfolio.html" class="nav-link">Meet our Team</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="contact.html" class="btn btn-primary">Get Started</a>
+        <button class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></button>
+    </div>
+</header>
+
+<main>
+    <section class="page-hero">
+        <div class="container">
+            <h1>Meet Our <span class="gradient-text">Team</span></h1>
+            <p>Passionate experts driving digital excellence at BarqNova.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Team Grid - 6 Members -->
+        <div class="team-grid">
+            
+            <!-- Member 1 - Aqsa Iqbal -->
+            <div class="team-card">
+                <div class="card-img">
+                    <img src="./static/aqsa.jpeg" alt="Aqsa Iqbal">
+                </div>
+                <div class="card-body">
+                    <h3>Aqsa Iqbal</h3>
+                    <div class="role">Meta Ads Expert</div>
+                    <span class="exp-badge"><i class="fas fa-calendar-alt"></i> 6 Years Experience</span>
+                    <p class="bio">Specialized in Meta advertising with proven track record of delivering high-ROI campaigns across multiple industries.</p>
+                    <div class="expertise">
+                        <span>Meta Ads</span>
+                        <span>Facebook Marketing</span>
+                        <span>Instagram Ads</span>
+                        <span>Campaign Strategy</span>
+                    </div>
+                    <div class="social">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 2 - Arslan Malik -->
+            <div class="team-card">
+                <div class="card-img">
+                    <img src="./static/Arslan.jpeg" alt="Arslan Malik">
+                </div>
+                <div class="card-body">
+                    <h3>Arslan Malik</h3>
+                    <div class="role">Google Ads Expert</div>
+                    <span class="exp-badge"><i class="fas fa-calendar-alt"></i> 4 Years Experience</span>
+                    <p class="bio">Expert in Google Ads management, specializing in search, display, and shopping campaigns to maximize conversions.</p>
+                    <div class="expertise">
+                        <span>Google Ads</span>
+                        <span>Search Campaigns</span>
+                        <span>Shopping Ads</span>
+                        <span>Display Ads</span>
+                    </div>
+                    <div class="social">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 3 - Adeel Lodhi -->
+            <div class="team-card">
+                <div class="card-img">
+                    <img src="./static/adeel.jpeg" alt="Adeel Lodhi">
+                </div>
+                <div class="card-body">
+                    <h3>Adeel Lodhi</h3>
+                    <div class="role">Video Editing Expert</div>
+                    <span class="exp-badge"><i class="fas fa-calendar-alt"></i> 3 Years Experience</span>
+                    <p class="bio">Creative video editor specializing in professional content creation, motion graphics, and visual storytelling.</p>
+                    <div class="expertise">
+                        <span>Video Editing</span>
+                        <span>Motion Graphics</span>
+                        <span>Adobe Premiere</span>
+                        <span>After Effects</span>
+                    </div>
+                    <div class="social">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 4 - Iqra Akram -->
+            <div class="team-card">
+                <div class="card-img">
+                    <img src="./static/iqra.jpeg" alt="Iqra Akram">
+                </div>
+                <div class="card-body">
+                    <h3>Iqra Akram</h3>
+                    <div class="role">Content Creation &amp; Video Editor</div>
+                    <span class="exp-badge"><i class="fas fa-calendar-alt"></i> 6 Years Experience</span>
+                    <p class="bio">Versatile professional specializing in content creation, video editing, and freelance project management.</p>
+                    <div class="expertise">
+                        <span>Content Creation</span>
+                        <span>Video Editing</span>
+                        <span>Freelancing</span>
+                        <span>Creative Direction</span>
+                    </div>
+                    <div class="social">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-dribbble"></i></a>
+                        <a href="#"><i class="fab fa-behance"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 5 - Saqib Hussain -->
+            <div class="team-card">
+                <div class="card-img">
+                    <img src="./static/Saqib.jpeg" alt="Saqib Hussain">
+                </div>
+                <div class="card-body">
+                    <h3>Saqib Hussain</h3>
+                    <div class="role">Frontend Developer</div>
+                    <span class="exp-badge"><i class="fas fa-calendar-alt"></i> 2 Years Experience</span>
+                    <p class="bio">Frontend developer skilled in building responsive, user-friendly web interfaces with modern technologies.</p>
+                    <div class="expertise">
+                        <span>HTML/CSS</span>
+                        <span>JavaScript</span>
+                        <span>React</span>
+                        <span>Responsive Design</span>
+                    </div>
+                    <div class="social">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 6 - Furqan Raza -->
+            <div class="team-card">
+                <div class="card-img">
+                    <img src="./static/furqan.jpeg" alt="Furqan Raza">
+                </div>
+                <div class="card-body">
+                    <h3>Furqan Raza</h3>
+                    <div class="role">Full-Stack Developer</div>
+                    <span class="exp-badge"><i class="fas fa-calendar-alt"></i> 2 Years Experience</span>
+                    <p class="bio">Full-stack developer specializing in building robust web applications with modern frameworks and APIs.</p>
+                    <div class="expertise">
+                        <span>Laravel</span>
+                        <span>Vue.js</span>
+                        <span>API Development</span>
+                        <span>Database Design</span>
+                    </div>
+                    <div class="social">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-stack-overflow"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CTA Section -->
+        <div class="case-study-card" style="background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(6,182,212,0.1)); border-radius: 30px; padding: 3rem; margin: 3rem 0; text-align: center; border: 1px solid var(--glass-border);">
+            <h2>Ready to Work With <span class="gradient-text">Our Experts?</span></h2>
+            <div class="result-badge" style="display: inline-block; background: rgba(0,255,136,0.1); border: 1px solid var(--neon); border-radius: 50px; padding: 0.5rem 1rem; color: var(--neon); margin: 1rem 0;">🚀 50+ Happy Clients</div>
+            <p>Let our team of professionals take your business to the next level.</p>
+            <a href="contact.html" class="btn btn-primary" style="margin-top: 1.5rem;">Start Your Project →</a>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <a href="index.html" class="footer-logo">
+                    <img src="./static/logo.jpeg" alt="Logo" class="footer-logo-img">
+                    <span>Barq<span class="gradient-text">Nova</span></span>
+                </a>
+                <p class="footer-desc">We help businesses grow with cutting-edge digital solutions.</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/share/1B7BiNUmZX/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/barqnova1122"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/aqsa-iqbal-813996344"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-links"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+            <div class="footer-links"><h4>Services</h4><ul><li><a href="service-detail.html?service=web">Web Development</a></li><li><a href="service-detail.html?service=marketing">Digital Marketing</a></li><li><a href="service-detail.html?service=seo">SEO</a></li></ul></div>
+            <div class="footer-links"><h4>Contact</h4><ul><li><i class="fas fa-envelope"></i> growthifydigitize@gmail.com</li><li><i class="fas fa-phone"></i> +92 3275124828</li></ul></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2025 BarqNova. All rights reserved.</p></div>
+    </div>
+</footer>
+
+<button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+<script src="script.js"></script>
+</body>
+</html>
