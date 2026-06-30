@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarqNova | About Us - Meet Our Team</title>
+    <link rel="icon" type="image/png" href="./static/logo.jpeg">
+    <link rel="shortcut icon" href="./static/logo.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .hero-image-large { width: 100%; height: 400px; object-fit: cover; border-radius: 30px; margin: 2rem 0; }
+        .counter-box { background: var(--glass); border-radius: 20px; padding: 2rem; text-align: center; transition: all 0.3s; }
+        .counter-box:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: var(--shadow-glow); }
+        .timeline { position: relative; padding-left: 2rem; margin: 3rem 0; }
+        .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--gradient-primary); }
+        .timeline-item { position: relative; padding-bottom: 2rem; padding-left: 2rem; }
+        .timeline-item::before { content: ''; position: absolute; left: -2rem; top: 0; width: 12px; height: 12px; background: var(--primary); border-radius: 50%; border: 2px solid var(--primary-light); }
+        .team-member { text-align: center; background: var(--glass); border-radius: 20px; padding: 2rem; transition: all 0.3s; }
+        .team-member:hover { transform: translateY(-8px); box-shadow: var(--shadow-glow); }
+        .team-member img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; border: 3px solid var(--primary); }
+        @media (max-width: 768px) {
+            .hero-image-large { height: 200px; }
+            .stats-grid, .team-grid { grid-template-columns: 1fr !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cursor"></div>
+<div class="cursor-follower"></div>
+<canvas id="particles-canvas"></canvas>
+
+<!-- AI Chat Bot Widget -->
+<div id="aiChatbot">
+    <div id="chatToggle"><i class="fas fa-comment-dots"></i></div>
+    <div id="chatWindow" style="display: none;">
+        <div style="background: var(--gradient-primary); padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <span><i class="fas fa-robot"></i> BarqNova AI Assistant</span>
+            <span id="closeChat" style="cursor: pointer;"><i class="fas fa-times"></i></span>
+        </div>
+        <div id="chatMessages" style="height: 300px; overflow-y: auto; padding: 1rem;">
+            <div style="margin-bottom: 1rem;"><span style="background: var(--primary); padding: 0.5rem 1rem; border-radius: 15px; display: inline-block;">Hello! How can I help you today?</span></div>
+        </div>
+        <div style="padding: 1rem; border-top: 1px solid var(--glass-border); display: flex; gap: 0.5rem;">
+            <input type="text" id="chatInput" placeholder="Ask me anything..." style="flex: 1; padding: 0.8rem; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 25px; color: white;">
+            <button id="sendChat" style="background: var(--primary); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer;"><i class="fas fa-paper-plane" style="color: white;"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/+92 3275124828" target="_blank" id="whatsappBtn"><i class="fab fa-whatsapp"></i></a>
+
+<header class="header" id="header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="./static/logo.jpeg" alt="BarqNova Logo" class="logo-img">
+            <span class="logo-text">Barq<span>Nova</span></span>
+        </a>
+        <nav class="nav" id="nav">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link active">About</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="portfolio.html" class="nav-link">Meet our Team</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="contact.html" class="btn btn-primary">Get Started</a>
+        <button class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></button>
+    </div>
+</header>
+
+<main>
+    <section class="page-hero" style="padding-bottom: 0;">
+        <div class="container">
+            <h1>We Are <span class="gradient-text">BarqNova</span></h1>
+            <p>A team of designers, developers, and marketers obsessed with your growth.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <img class="hero-image-large reveal" src="./static/main board.jpg" alt="Our Team">
+
+        <!-- CEO Section -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin: 4rem 0;">
+            <div class="reveal-left" style="text-align: center;">
+                <img src="./static/aqsa.jpeg" alt="CEO" style="width: 280px; height: 280px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary); margin: 0 auto; display: block;">
+                <h3 style="margin-top: 1rem;">Aqsa Iqbal</h3>
+                <p style="color: var(--primary-light);">Founder & CEO</p>
+            </div>
+            <div class="reveal-right">
+                <h2>Message from our <span class="gradient-text">CEO</span></h2>
+                <p style="font-size: 1.2rem; font-style: italic; color: var(--primary-light); margin: 1rem 0;">"We don't just build websites — we build long-term partnerships focused on real, measurable growth."</p>
+                <p>Founded in 2023, BarqNova started with a simple mission: help businesses grow online without the BS. We saw too many agencies overpromising and underdelivering, so we decided to do things differently.</p>
+                <p style="margin-top: 1rem;">Today, we're a team of 25+ creative professionals who have helped over 150 businesses scale their online presence. From startups to established brands, we bring the same passion and dedication to every project.</p>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin: 4rem 0;">
+            <div class="counter-box reveal"><i class="fas fa-project-diagram" style="font-size: 2rem;"></i><div class="counter" data-target="50" style="font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0;">0</div><p>Projects Completed</p></div>
+            <div class="counter-box reveal"><i class="fas fa-smile" style="font-size: 2rem;"></i><div class="counter" data-target="98" style="font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0;">0</div><p>Client Satisfaction %</p></div>
+            <div class="counter-box reveal"><i class="fas fa-users" style="font-size: 2rem;"></i><div class="counter" data-target="10" style="font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0;">0</div><p>Team Members</p></div>
+            <div class="counter-box reveal"><i class="fas fa-globe" style="font-size: 2rem;"></i><div class="counter" data-target="5" style="font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0;">0</div><p>Countries Served</p></div>
+        </div>
+
+        <!-- Mission & Vision -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 4rem 0;">
+            <div style="background: var(--glass); border-radius: 24px; padding: 2rem; text-align: center;"><i class="fas fa-bullseye" style="font-size: 2.5rem;"></i><h3 style="margin: 1rem 0;">Our Mission</h3><p style="color: var(--light-gray);">To empower businesses with cutting-edge digital solutions that drive measurable growth and deliver exceptional ROI.</p></div>
+            <div style="background: var(--glass); border-radius: 24px; padding: 2rem; text-align: center;"><i class="fas fa-eye" style="font-size: 2.5rem;"></i><h3 style="margin: 1rem 0;">Our Vision</h3><p style="color: var(--light-gray);">To become the most trusted digital growth partner for ambitious businesses worldwide.</p></div>
+        </div>
+
+        <!-- Core Values -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin: 4rem 0;">
+            <div style="text-align: center; padding: 2rem; background: var(--glass); border-radius: 20px;"><i class="fas fa-chart-line" style="font-size: 2rem;"></i><h3>Data-Driven</h3><p style="color: var(--light-gray);">Every decision backed by analytics, not guesswork.</p></div>
+            <div style="text-align: center; padding: 2rem; background: var(--glass); border-radius: 20px;"><i class="fas fa-bolt" style="font-size: 2rem;"></i><h3>Fast Execution</h3><p style="color: var(--light-gray);">We move quickly and deliver ahead of schedule.</p></div>
+            <div style="text-align: center; padding: 2rem; background: var(--glass); border-radius: 20px;"><i class="fas fa-handshake" style="font-size: 2rem;"></i><h3>Transparent</h3><p style="color: var(--light-gray);">Real-time reporting, zero hidden fees.</p></div>
+        </div>
+
+        <!-- Our Journey Timeline -->
+        <h2 class="section-title">Our <span class="gradient-text">Journey</span></h2>
+        <div class="timeline">
+            <div class="timeline-item"><h3>2023 - The Beginning</h3><p style="color: var(--light-gray);">BarqNova was founded with a vision to provide honest, results-driven digital services.</p></div>
+            <div class="timeline-item"><h3>2024 - First Milestone</h3><p style="color: var(--light-gray);">Completed 20+ projects and expanded team to 10 members.</p></div>
+            <div class="timeline-item"><h3>2024 - Global Expansion</h3><p style="color: var(--light-gray);">Started serving international clients across 5+ countries.</p></div>
+            <!-- <div class="timeline-item"><h3>2023 - Award Winning</h3><p style="color: var(--light-gray);">Recognized as Top Digital Agency by industry leaders.</p></div> -->
+            <div class="timeline-item"><h3>2025 - 50+ Projects</h3><p style="color: var(--light-gray);">Reached 50+ successful projects with 98% satisfaction.</p></div>
+            <div class="timeline-item"><h3>2026 - The Future</h3><p style="color: var(--light-gray);">Continuing to innovate and help businesses grow globally.</p></div>
+        </div>
+
+        <!-- Leadership Team -->
+        <h2 class="section-title">Meet Our <span class="gradient-text">Leadership</span></h2>
+        <div class="team-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin: 3rem 0;">
+            <div class="team-member"><img src="./static/furqan.jpeg"><h3>Furqan Raza</h3><p style="color: var(--primary-light);">CTO</p><p style="color: var(--light-gray);">Expert in Web Development</p></div>
+            <div class="team-member"><img src="./static/adeel.jpeg"><h3>Adeel Lodhi</h3><p style="color: var(--primary-light);">CMO</p><p style="color: var(--light-gray);">Expert in Meta Ads</p></div>
+            <div class="team-member"><img src="./static/Arslan.jpeg"><h3>Arslan Malik</h3><p style="color: var(--primary-light);">Creative Director</p><p style="color: var(--light-gray);">Expert in Google Ads</p></div>
+            <div class="team-member"><img src="./static/iqra.jpeg"><h3>Iqra Akram</h3><p style="color: var(--primary-light);">Head of Operations</p><p style="color: var(--light-gray);">Expert in Operations Management</p></div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="container">
+        <div class="cta-section">
+            <h2>Join <span class="gradient-text">100+ Happy Clients</span></h2>
+            <p>Let's work together to grow your business.</p>
+            <a href="contact.html" class="btn btn-primary btn-large">Start Your Project →</a>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <a href="index.html" class="footer-logo">
+                    <img src="./static/logo.jpeg" alt="Logo" class="footer-logo-img">
+                    <span>Barq<span class="gradient-text">Nova</span></span>
+                </a>
+                <p class="footer-desc">We help businesses grow with cutting-edge digital solutions.</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/share/1B7BiNUmZX/"><i class="fab fa-facebook-f"></i></a>
+                    <!-- <a href="#"><i class="fab fa-twitter"></i></a> -->
+                    <a href="https://www.instagram.com/barqnova1122?igsh=YnR5NGVvNzl1dnQy"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/aqsa-iqbal-813996344?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-links"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+            <div class="footer-links"><h4>Services</h4><ul><li><a href="service-detail.html?service=web">Web Development</a></li><li><a href="service-detail.html?service=marketing">Digital Marketing</a></li><li><a href="service-detail.html?service=seo">SEO</a></li></ul></div>
+            <div class="footer-links"><h4>Contact</h4><ul><li><i class="fas fa-envelope"></i> growthifydigitize@gmail.com</li><li><i class="fas fa-phone"></i> +92 3275124828</li></ul></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2025 BarqNova. All rights reserved.</p></div>
+    </div>
+</footer>
+
+<button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+<script src="script.js"></script>
+</body>
+</html>
