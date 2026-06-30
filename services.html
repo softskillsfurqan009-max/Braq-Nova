@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarqNova | Our Services - Digital Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="./static/logo.jpeg">
+    <link rel="shortcut icon" href="./static/logo.jpeg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .service-category { margin: 4rem 0; }
+        .category-title { font-size: 2rem; margin-bottom: 2rem; padding-left: 1rem; border-left: 4px solid var(--primary); }
+        .faq-item { background: var(--glass); border-radius: 16px; margin-bottom: 1rem; overflow: hidden; }
+        .faq-question { padding: 1.2rem 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+        .faq-answer { padding: 0 1.5rem; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; color: var(--light-gray); }
+        .faq-item.active .faq-answer { padding: 0 1.5rem 1.2rem; max-height: 200px; }
+        
+        /* Hero Image Styles */
+        .services-hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 30px;
+            margin: 2rem 0 1rem;
+        }
+        
+        /* Service Card - Same as index.html */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .service-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-height: 420px;
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-glow);
+        }
+        /* Image size same as index.html - Larger */
+        .service-img {
+            width: 100%;
+            height: 180px;
+            border-radius: 18px;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+        }
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+        }
+        .service-card p {
+            color: var(--light-gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            flex: 1;
+        }
+        .service-card span {
+            color: var(--primary-light);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: auto;
+            justify-content: center;
+        }
+        
+        /* Case Studies Section */
+        .case-studies-section {
+            margin: 4rem 0;
+        }
+        .case-studies-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .case-study-card {
+            background: var(--glass);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid var(--glass-border);
+        }
+        .case-study-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-glow);
+        }
+        .case-study-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .case-study-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .case-study-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .case-study-info p {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .result-badge {
+            display: inline-block;
+            background: rgba(0,255,136,0.1);
+            border: 1px solid var(--neon);
+            border-radius: 50px;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            color: var(--neon);
+        }
+        
+        @media (max-width: 768px) {
+            .case-studies-grid { grid-template-columns: 1fr; }
+            .services-hero-image { height: 200px; }
+            .services-grid { grid-template-columns: 1fr; }
+            .service-card { min-height: 380px; }
+            .service-img { height: 160px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cursor"></div>
+<div class="cursor-follower"></div>
+<canvas id="particles-canvas"></canvas>
+
+<!-- AI Chat Bot Widget -->
+<div id="aiChatbot">
+    <div id="chatToggle"><i class="fas fa-comment-dots"></i></div>
+    <div id="chatWindow" style="display: none;">
+        <div style="background: var(--gradient-primary); padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <span><i class="fas fa-robot"></i> BarqNova AI Assistant</span>
+            <span id="closeChat" style="cursor: pointer;"><i class="fas fa-times"></i></span>
+        </div>
+        <div id="chatMessages" style="height: 300px; overflow-y: auto; padding: 1rem;">
+            <div style="margin-bottom: 1rem;"><span style="background: var(--primary); padding: 0.5rem 1rem; border-radius: 15px; display: inline-block;">Hello! How can I help you today?</span></div>
+        </div>
+        <div style="padding: 1rem; border-top: 1px solid var(--glass-border); display: flex; gap: 0.5rem;">
+            <input type="text" id="chatInput" placeholder="Ask me anything..." style="flex: 1; padding: 0.8rem; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 25px; color: white;">
+            <button id="sendChat" style="background: var(--primary); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer;"><i class="fas fa-paper-plane" style="color: white;"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/923275124828" target="_blank" id="whatsappBtn"><i class="fab fa-whatsapp"></i></a>
+
+<header class="header" id="header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="./static/logo.jpeg" alt="BarqNova Logo" class="logo-img">
+            <span class="logo-text">Barq<span>Nova</span></span>
+        </a>
+        <nav class="nav" id="nav">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="services.html" class="nav-link active">Services</a></li>
+                <li><a href="portfolio.html" class="nav-link">Meet our Team</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="contact.html" class="btn btn-primary">Get Started</a>
+        <button class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></button>
+    </div>
+</header>
+
+<main>
+    <section class="page-hero">
+        <div class="container">
+            <h1>Our <span class="gradient-text">Services</span></h1>
+            <p>10+ specialized digital solutions to help your business grow and dominate your market.</p>
+        </div>
+    </section>
+
+    <!-- Hero Image - Services Related -->
+    <div class="container">
+        <img class="services-hero-image" src="./static/service page up.jpg" alt="Our Digital Services Team">
+    </div>
+
+    <div class="container">
+        <!-- Development Services -->
+        <div class="service-category">
+            <h2 class="category-title"><i class="fas fa-code"></i> Development & Design</h2>
+            <div class="services-grid">
+                <div class="service-card" onclick="location.href='service-detail.html?service=web'">
+                    <img src="./static/Website Development.jpg" alt="Web Development" class="service-img">
+                    <h3>Web Development</h3>
+                    <p>Custom websites, e-commerce, and web applications built for performance and speed.</p>
+                    <span>Learn More →</span>
+                </div>
+                <div class="service-card" onclick="location.href='service-detail.html?service=branding'">
+                    <img src="./static/Brand Identity card.jpg" alt="Brand Identity" class="service-img">
+                    <h3>Brand Identity</h3>
+                    <p>Logo design, brand guidelines, and complete visual identity systems that stand out.</p>
+                    <span>Learn More →</span>
+                </div>
+                <div class="service-card" onclick="location.href='service-detail.html?service=video'">
+                    <img src="./static/Video Production.jpg" alt="Video Production" class="service-img">
+                    <h3>Video Production</h3>
+                    <p>Professional videos, commercials, and motion graphics that captivate audiences.</p>
+                    <span>Learn More →</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Marketing Services -->
+        <div class="service-category">
+            <h2 class="category-title"><i class="fas fa-chart-line"></i> Marketing & Growth</h2>
+            <div class="services-grid">
+                <div class="service-card" onclick="location.href='service-detail.html?service=marketing'">
+                    <img src="./static/Digital Marketing.jpg" alt="Digital Marketing" class="service-img">
+                    <h3>Digital Marketing</h3>
+                    <p>Comprehensive marketing strategies that drive real results and maximize ROI.</p>
+                    <span>Learn More →</span>
+                </div>
+                <div class="service-card" onclick="location.href='service-detail.html?service=seo'">
+                    <img src="./static/SEO Optimization card.jpg" alt="SEO" class="service-img">
+                    <h3>SEO Optimization</h3>
+                    <p>Rank higher on Google with white-hat SEO techniques that deliver long-term results.</p>
+                    <span>Learn More →</span>
+                </div>
+                <div class="service-card" onclick="location.href='service-detail.html?service=social'">
+                    <img src="./static/Social Media Marketing card.jpg" alt="Social Media" class="service-img">
+                    <h3>Social Media Management</h3>
+                    <p>Build engaged communities across all platforms with strategic content and engagement.</p>
+                    <span>Learn More →</span>
+                </div>
+                <div class="service-card" onclick="location.href='service-detail.html?service=ppc'">
+                    <img src="./static/PPC Services card.jpg" alt="PPC" class="service-img">
+                    <h3>PPC Advertising</h3>
+                    <p>Google Ads, Facebook Ads, and retargeting campaigns that deliver measurable results.</p>
+                    <span>Learn More →</span>
+                </div>
+                <div class="service-card" onclick="location.href='service-detail.html?service=email'">
+                    <img src="./static/Email Marketing Expert card.jpg" alt="Email Marketing" class="service-img">
+                    <h3>Email Marketing</h3>
+                    <p>Automated campaigns that nurture leads and convert prospects into loyal customers.</p>
+                    <span>Learn More →</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Services -->
+        <div class="service-category">
+            <h2 class="category-title"><i class="fas fa-pen-fancy"></i> Content & Creative</h2>
+            <div class="services-grid">
+                <div class="service-card" onclick="location.href='service-detail.html?service=content'">
+                    <img src="./static/content cemera.jpg" alt="Content Creation" class="service-img">
+                    <h3>Content Creation</h3>
+                    <p>Blog posts, articles, and copywriting that engages readers and drives conversions.</p>
+                    <span>Learn More →</span>
+                </div>
+                <div class="service-card" onclick="location.href='service-detail.html?service=analytics'">
+                    <img src="./static/Analytics.jpg" alt="Analytics" class="service-img">
+                    <h3>Analytics & Insights</h3>
+                    <p>Data-driven decisions with custom reporting dashboards and actionable insights.</p>
+                    <span>Learn More →</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Case Studies Section -->
+        <div class="case-studies-section">
+            <h2 class="section-title">Our <span class="gradient-text">Success Stories</span></h2>
+            <p style="text-align: center; color: var(--light-gray); max-width: 600px; margin: 0 auto 2rem;">See how we've helped businesses like yours achieve remarkable results.</p>
+            <div class="case-studies-grid">
+                <div class="case-study-card">
+                    <img src="./static/parwaz.jpeg" alt="Case Study 1">
+                    <div class="case-study-info">
+                        <h3>LuxeStyle Fashion</h3>
+                        <p> TikTok Ads Campaign</p>
+                        <div class="result-badge">📈 +212% ROI</div>
+                    </div>
+                </div>
+                <div class="case-study-card">
+                    <img src="./static/palor.jpeg" alt="Case Study 2">
+                    <div class="case-study-info">
+                        <h3>Finwise AI</h3>
+                        <p>Brand Identity + Digital Marketing Campaign</p>
+                        <div class="result-badge">📈 +400% Traffic</div>
+                    </div>
+                </div>
+                <div class="case-study-card">
+                    <img src="./static/cart.jpeg" alt="Case Study 3">
+                    <div class="case-study-info">
+                        <h3>Burger House</h3>
+                        <p>Local SEO + Google Maps Optimization</p>
+                        <div class="result-badge">📈 +200% Foot Traffic</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <h2 class="section-title">Frequently Asked <span class="gradient-text">Questions</span></h2>
+        <div style="margin: 3rem 0;">
+            <div class="faq-item"><div class="faq-question">How long does a project take? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Project timelines vary based on scope. A standard website takes 2-4 weeks, while marketing campaigns are ongoing. We'll provide a detailed timeline during consultation.</div></div>
+            <div class="faq-item"><div class="faq-question">Do you offer custom packages? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Absolutely! Every business is unique. We create custom packages tailored to your specific needs and budget.</div></div>
+            <div class="faq-item"><div class="faq-question">What support do you provide? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">We offer 24/7 technical support for all our clients, with dedicated account managers for ongoing projects.</div></div>
+            <div class="faq-item"><div class="faq-question">Can you help with existing websites? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Yes! We offer website redesign, SEO audits, and performance optimization for existing sites.</div></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="cta-section">
+            <h2>Need a <span class="gradient-text">Custom Solution?</span></h2>
+            <p>Let's discuss your specific business needs and create a tailored plan.</p>
+            <a href="contact.html" class="btn btn-primary btn-large">Book Free Consultation →</a>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <a href="index.html" class="footer-logo">
+                    <img src="./static/logo.jpeg" alt="Logo" class="footer-logo-img">
+                    <span>Barq<span class="gradient-text">Nova</span></span>
+                </a>
+                <p class="footer-desc">We help businesses grow with cutting-edge digital solutions.</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/share/1B7BiNUmZX/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/barqnova1122?igsh=YnR5NGVvNzl1dnQy"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/aqsa-iqbal-813996344?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-links"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+            <div class="footer-links"><h4>Services</h4><ul><li><a href="service-detail.html?service=web">Web Development</a></li><li><a href="service-detail.html?service=marketing">Digital Marketing</a></li><li><a href="service-detail.html?service=seo">SEO</a></li></ul></div>
+            <div class="footer-links"><h4>Contact</h4><ul><li><i class="fas fa-envelope"></i> growthifydigitize@gmail.com</li><li><i class="fas fa-phone"></i> +92 3275124828</li></ul></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 BarqNova. All rights reserved.</p></div>
+    </div>
+</footer>
+
+<button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+<script src="script.js"></script>
+<script>
+    // FAQ Accordion (inline)
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.querySelector('.faq-question').addEventListener('click', () => {
+            item.classList.toggle('active');
+        });
+    });
+    
+    // Sticky Header
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+    
+    // Mobile Menu
+    const toggle = document.getElementById('mobileToggle');
+    const nav = document.getElementById('nav');
+    if (toggle) {
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
+            nav.classList.toggle('active');
+            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+        });
+    }
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            toggle?.classList.remove('active');
+            nav?.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+    
+    // Back to Top
+    const backTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backTop.classList.add('visible');
+        } else {
+            backTop.classList.remove('visible');
+        }
+    });
+    backTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // Chat Bot
+    const chatToggle = document.getElementById('chatToggle');
+    const chatWindow = document.getElementById('chatWindow');
+    const closeChat = document.getElementById('closeChat');
+    const sendChat = document.getElementById('sendChat');
+    const chatInput = document.getElementById('chatInput');
+    const chatMessages = document.getElementById('chatMessages');
+    
+    if (chatToggle) {
+        chatToggle.addEventListener('click', () => {
+            chatWindow.style.display = chatWindow.style.display === 'none' ? 'block' : 'none';
+        });
+    }
+    if (closeChat) {
+        closeChat.addEventListener('click', () => {
+            chatWindow.style.display = 'none';
+        });
+    }
+    function addMessage(message, isUser = false) {
+        const msgDiv = document.createElement('div');
+        msgDiv.style.marginBottom = '1rem';
+        msgDiv.style.textAlign = isUser ? 'right' : 'left';
+        msgDiv.innerHTML = `<span style="background: ${isUser ? 'var(--primary)' : 'var(--glass)'}; padding: 0.5rem 1rem; border-radius: 15px; display: inline-block;">${message}</span>`;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    if (sendChat) {
+        sendChat.addEventListener('click', () => {
+            const message = chatInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                chatInput.value = '';
+                setTimeout(() => {
+                    let reply = "Thanks for your message! Our team will get back to you shortly.";
+                    if (message.toLowerCase().includes('price') || message.toLowerCase().includes('cost')) {
+                        reply = "We offer custom pricing based on your needs. Would you like to schedule a free consultation?";
+                    } else if (message.toLowerCase().includes('time')) {
+                        reply = "Project timelines typically range from 2-6 weeks depending on complexity.";
+                    }
+                    addMessage(reply, false);
+                }, 500);
+            }
+        });
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendChat.click();
+        });
+    }
+</script>
+</body>
+</html>
